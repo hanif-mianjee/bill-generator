@@ -1,6 +1,7 @@
 /**
  * Medicine Selection Algorithm
  * Tiered greedy approach with randomization to select medicines that sum to target amount
+ * IMPORTANT: Bill total should always be >= target amount (never less)
  */
 
 class MedicineSelector {
@@ -35,32 +36,34 @@ class MedicineSelector {
 
   /**
    * Select medicines that sum to approximately the target amount
+   * Bill total will always be >= targetAmount (within +5% tolerance)
    * @param {number} targetAmount - Target total in PKR
-   * @param {number} tolerance - Acceptable deviation (default 5%)
+   * @param {number} tolerance - Acceptable deviation above target (default 5%)
    * @returns {Array} Selected medicines with quantities
    */
   selectMedicines(targetAmount, tolerance = 0.05) {
-    const minTarget = targetAmount * (1 - tolerance);
+    // IMPORTANT: Bill should be >= target, up to +5% above
+    const minTarget = targetAmount;
     const maxTarget = targetAmount * (1 + tolerance);
 
-    // Determine item count based on target amount
+    // Determine item count based on target amount - fewer items for single-page bills
     let minItems, maxItems;
     if (targetAmount <= 1000) {
       minItems = 3;
-      maxItems = 6;
+      maxItems = 5;
     } else if (targetAmount <= 5000) {
+      minItems = 3;
+      maxItems = 6;
+    } else if (targetAmount <= 20000) {
+      minItems = 4;
+      maxItems = 7;
+    } else {
       minItems = 4;
       maxItems = 8;
-    } else if (targetAmount <= 20000) {
-      minItems = 5;
-      maxItems = 10;
-    } else {
-      minItems = 6;
-      maxItems = 12;
     }
 
     // Try multiple times to get a good selection
-    for (let attempt = 0; attempt < 15; attempt++) {
+    for (let attempt = 0; attempt < 20; attempt++) {
       const result = this.attemptSelection(targetAmount, minItems, maxItems, minTarget, maxTarget);
       if (result) {
         const total = result.reduce((sum, item) => sum + item.total, 0);
@@ -70,7 +73,7 @@ class MedicineSelector {
       }
     }
 
-    // Fallback: use precise greedy approach
+    // Fallback: use precise greedy approach that ensures total >= target
     return this.preciseSelection(targetAmount, minItems, maxItems, minTarget, maxTarget);
   }
 
@@ -230,11 +233,11 @@ class MedicineSelector {
   }
 
   /**
-   * Precise selection for edge cases - ensures we hit the target
+   * Precise selection for edge cases - ensures we hit the target (total >= targetAmount)
    */
   preciseSelection(targetAmount, minItems, maxItems, minTarget, maxTarget) {
     const selected = [];
-    let remaining = targetAmount;
+    let currentTotal = 0;
     const usedIds = new Set();
 
     // Sort all medicines by price descending
@@ -244,38 +247,56 @@ class MedicineSelector {
     for (const medicine of sortedMeds) {
       if (selected.length >= maxItems) break;
       if (usedIds.has(medicine.id)) continue;
-      if (remaining <= 0) break;
+      if (currentTotal >= maxTarget) break;
 
-      // Calculate max quantity we can use
-      const maxAffordableQty = Math.floor(remaining / medicine.price);
+      const remaining = targetAmount - currentTotal;
+
+      // Calculate optimal quantity
+      const maxAffordableQty = Math.ceil(remaining / medicine.price);
       const qty = Math.min(medicine.maxQty, Math.max(medicine.minQty, maxAffordableQty));
 
-      if (qty >= medicine.minQty && medicine.price * qty <= remaining + (targetAmount * 0.05)) {
+      if (qty >= medicine.minQty) {
         const itemTotal = medicine.price * qty;
         selected.push({
           ...medicine,
           quantity: qty,
           total: itemTotal
         });
-        remaining -= itemTotal;
+        currentTotal += itemTotal;
         usedIds.add(medicine.id);
       }
     }
 
-    // If we haven't reached minimum items, add more
-    if (selected.length < minItems) {
-      const smallItems = this.shuffle(
+    // If total is still less than target, add more items or increase quantities
+    while (currentTotal < targetAmount && selected.length < maxItems) {
+      const availableMeds = this.shuffle(
         this.medicines.filter(m => !usedIds.has(m.id))
       );
 
-      for (const medicine of smallItems) {
-        if (selected.length >= minItems) break;
-        selected.push({
-          ...medicine,
-          quantity: medicine.minQty,
-          total: medicine.price * medicine.minQty
-        });
-        usedIds.add(medicine.id);
+      if (availableMeds.length === 0) break;
+
+      const medicine = availableMeds[0];
+      const remaining = targetAmount - currentTotal;
+      const qty = Math.min(medicine.maxQty, Math.max(medicine.minQty, Math.ceil(remaining / medicine.price)));
+
+      selected.push({
+        ...medicine,
+        quantity: qty,
+        total: medicine.price * qty
+      });
+      currentTotal += medicine.price * qty;
+      usedIds.add(medicine.id);
+    }
+
+    // Final adjustment: if still under target, increase quantities
+    if (currentTotal < targetAmount) {
+      for (const item of selected) {
+        while (item.quantity < item.maxQty && currentTotal < targetAmount) {
+          item.quantity++;
+          item.total = item.price * item.quantity;
+          currentTotal += item.price;
+        }
+        if (currentTotal >= targetAmount) break;
       }
     }
 

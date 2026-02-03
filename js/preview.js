@@ -179,17 +179,20 @@ class BillPreview {
    */
   setPaperSize(paperSizeId) {
     const paperSizes = {
-      'a4': { width: '210mm', height: '297mm', padding: '15mm' },
-      'a5': { width: '148mm', height: '210mm', padding: '10mm' },
-      'letter': { width: '8.5in', height: '11in', padding: '0.5in' },
-      'legal': { width: '8.5in', height: '14in', padding: '0.5in' },
-      'half-letter': { width: '5.5in', height: '8.5in', padding: '0.4in' }
+      'thermal': { width: '80mm', height: '200mm', padding: '3mm', fontSize: '9px' },
+      'a4': { width: '210mm', height: '297mm', padding: '10mm', fontSize: '11px' },
+      'a5': { width: '148mm', height: '210mm', padding: '8mm', fontSize: '10px' },
+      'letter': { width: '8.5in', height: '11in', padding: '0.4in', fontSize: '11px' },
+      'legal': { width: '8.5in', height: '14in', padding: '0.4in', fontSize: '11px' },
+      'half-letter': { width: '5.5in', height: '8.5in', padding: '0.3in', fontSize: '10px' }
     };
 
-    const size = paperSizes[paperSizeId] || paperSizes['a4'];
+    const size = paperSizes[paperSizeId] || paperSizes['thermal'];
     this.container.style.width = size.width;
-    this.container.style.minHeight = size.height;
+    this.container.style.maxHeight = size.height;
+    this.container.style.minHeight = 'auto';
     this.container.style.padding = size.padding;
+    this.container.style.fontSize = size.fontSize;
     this.container.setAttribute('data-paper-size', paperSizeId);
   }
 

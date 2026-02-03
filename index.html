@@ -57,29 +57,35 @@
             <span class="error-message" id="billDateError"></span>
           </div>
 
-          <!-- Total Amount -->
+          <!-- Total Amount(s) -->
           <div class="form-group">
-            <label for="totalAmount" class="form-label">Total Amount (PKR) <span class="required">*</span></label>
-            <input
-              type="number"
-              id="totalAmount"
-              name="totalAmount"
+            <label for="totalAmounts" class="form-label">Total Amount(s) (PKR) <span class="required">*</span></label>
+            <textarea
+              id="totalAmounts"
+              name="totalAmounts"
               class="form-input"
-              placeholder="Enter total amount"
-              min="100"
-              max="500000"
+              placeholder="Enter amounts (one per line for multiple bills)&#10;e.g.&#10;5000&#10;7500&#10;3200"
+              rows="3"
               required
-            >
-            <span class="hint">Minimum: PKR 100, Maximum: PKR 500,000</span>
-            <span class="error-message" id="totalAmountError"></span>
+            ></textarea>
+            <span class="hint">Enter one amount per line for multiple bills (PKR 100 - 500,000 each)</span>
+            <span class="error-message" id="totalAmountsError"></span>
           </div>
+
+          <!-- Hidden single amount field for compatibility -->
+          <input type="hidden" id="totalAmount" name="totalAmount" value="0">
 
           <!-- Store Selection -->
           <div class="form-group">
             <label for="storeSelect" class="form-label">Pharmacy Store</label>
-            <select id="storeSelect" name="storeSelect" class="form-input">
-              <!-- Options populated by JavaScript -->
-            </select>
+            <div class="template-controls">
+              <select id="storeSelect" name="storeSelect" class="form-input">
+                <!-- Options populated by JavaScript -->
+              </select>
+              <button type="button" id="randomStore" class="btn btn-secondary" title="Random Store">
+                <span class="icon">&#8635;</span>
+              </button>
+            </div>
           </div>
 
           <!-- Template Selection -->

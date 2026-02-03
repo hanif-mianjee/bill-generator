@@ -95,9 +95,9 @@ const APP_DATA = {
     { "id": "MED083", "name": "Lactare", "genericName": "Galactagogue", "manufacturer": "TTK Healthcare", "category": "post-maternity", "strength": "Herbal", "packSize": "30 capsules", "price": 850, "minQty": 1, "maxQty": 4 },
     { "id": "MED084", "name": "Galact Granules", "genericName": "Shatavari + Fenugreek", "manufacturer": "Himalaya", "category": "post-maternity", "strength": "Herbal", "packSize": "200g", "price": 750, "minQty": 1, "maxQty": 3 },
     { "id": "MED085", "name": "Domperidone", "genericName": "Domperidone", "manufacturer": "Local Pharma", "category": "post-maternity", "strength": "10mg", "packSize": "30 tablets", "price": 180, "minQty": 1, "maxQty": 5 },
-    { "id": "MED086", "name": "Nipple Cream", "genericName": "Lanolin", "manufacturer": "Medela", "category": "post-maternity", "strength": "Pure", "packSize": "37g tube", "price": 1200, "minQty": 1, "maxQty": 3 },
-    { "id": "MED087", "name": "Breast Pump", "genericName": "Manual Breast Pump", "manufacturer": "Philips Avent", "category": "post-maternity", "strength": "Manual", "packSize": "1 unit", "price": 4500, "minQty": 1, "maxQty": 1 },
-    { "id": "MED088", "name": "Nursing Pads", "genericName": "Disposable Breast Pads", "manufacturer": "Pigeon", "category": "post-maternity", "strength": "Standard", "packSize": "36 pads", "price": 650, "minQty": 1, "maxQty": 5 },
+    { "id": "MED086", "name": "Chest Cream", "genericName": "Lanolin", "manufacturer": "Medela", "category": "post-maternity", "strength": "Pure", "packSize": "37g tube", "price": 1200, "minQty": 1, "maxQty": 3 },
+    { "id": "MED087", "name": "Feeder Pump", "genericName": "Manual Feeder Pump", "manufacturer": "Philips Avent", "category": "post-maternity", "strength": "Manual", "packSize": "1 unit", "price": 4500, "minQty": 1, "maxQty": 1 },
+    { "id": "MED088", "name": "Nursing Pads", "genericName": "Disposable Feeder Pads", "manufacturer": "Pigeon", "category": "post-maternity", "strength": "Standard", "packSize": "36 pads", "price": 650, "minQty": 1, "maxQty": 5 },
     { "id": "MED089", "name": "Postpartum Vitamins", "genericName": "Postnatal Multivitamin", "manufacturer": "Centrum", "category": "post-maternity", "strength": "Complete", "packSize": "60 tablets", "price": 1950, "minQty": 1, "maxQty": 3 },
     { "id": "MED090", "name": "Sitz Bath Salts", "genericName": "Epsom Salt + Herbs", "manufacturer": "Earth Mama", "category": "post-maternity", "strength": "Therapeutic", "packSize": "500g", "price": 1100, "minQty": 1, "maxQty": 3 },
 
@@ -383,13 +383,14 @@ const APP_DATA = {
   ],
 
   templates: [
+    { "id": "thermal-print", "name": "Thermal Print (Default)", "description": "80mm thermal printer style - compact monospace" },
+    { "id": "simple-receipt", "name": "Simple Receipt", "description": "Receipt style print" },
     { "id": "classic-professional", "name": "Classic Professional", "description": "Blue formal design with traditional layout" },
     { "id": "modern-minimal", "name": "Modern Minimal", "description": "Clean grayscale with minimalist aesthetics" },
     { "id": "pharmacy-green", "name": "Pharmacy Green", "description": "Health-focused green theme" },
     { "id": "corporate-blue", "name": "Corporate Blue", "description": "Business formal appearance" },
     { "id": "warm-healthcare", "name": "Warm Healthcare", "description": "Orange and coral tones" },
     { "id": "medical-trust", "name": "Medical Trust", "description": "Teal medical professional" },
-    { "id": "simple-receipt", "name": "Simple Receipt", "description": "Thermal print style" },
     { "id": "premium-gold", "name": "Premium Gold", "description": "Luxury gold accents" },
     { "id": "digital-modern", "name": "Digital Modern", "description": "Gradient blue tech look" },
     { "id": "traditional", "name": "Traditional", "description": "Classic green and white" },
@@ -406,10 +407,11 @@ const APP_DATA = {
   ],
 
   paperSizes: [
-    { "id": "a4", "name": "A4 (210 × 297 mm)", "width": "210mm", "height": "297mm" },
+    { "id": "thermal", "name": "Thermal (80mm)", "width": "80mm", "height": "200mm" },
     { "id": "a5", "name": "A5 (148 × 210 mm)", "width": "148mm", "height": "210mm" },
+    { "id": "half-letter", "name": "Half Letter (5.5 × 8.5 in)", "width": "5.5in", "height": "8.5in" },
+    { "id": "a4", "name": "A4 (210 × 297 mm)", "width": "210mm", "height": "297mm" },
     { "id": "letter", "name": "Letter (8.5 × 11 in)", "width": "8.5in", "height": "11in" },
-    { "id": "legal", "name": "Legal (8.5 × 14 in)", "width": "8.5in", "height": "14in" },
-    { "id": "half-letter", "name": "Half Letter (5.5 × 8.5 in)", "width": "5.5in", "height": "8.5in" }
+    { "id": "legal", "name": "Legal (8.5 × 14 in)", "width": "8.5in", "height": "14in" }
   ]
 };

@@ -35,10 +35,13 @@
   color: var(--bill-text);
   font-family: var(--bill-font);
   width: 210mm;
-  min-height: 297mm;
-  padding: 15mm;
+  min-height: auto;
+  max-height: 297mm;
+  padding: 10mm;
   margin: 0 auto;
   box-shadow: var(--shadow-lg);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* Placeholder */
@@ -56,8 +59,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  padding-bottom: 10mm;
-  margin-bottom: 8mm;
+  padding-bottom: 5mm;
+  margin-bottom: 4mm;
   border-bottom: 2px solid var(--bill-border);
 }
 
@@ -127,9 +130,9 @@
 /* Customer Section */
 .customer-section {
   background-color: var(--bill-table-header-bg);
-  padding: 10px 15px;
+  padding: 6px 12px;
   border-radius: 4px;
-  margin-bottom: 8mm;
+  margin-bottom: 4mm;
 }
 
 .customer-section .label {
@@ -149,8 +152,8 @@
 .medicines-table {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 8mm;
-  font-size: 12px;
+  margin-bottom: 4mm;
+  font-size: 11px;
 }
 
 .medicines-table thead {
@@ -158,12 +161,12 @@
 }
 
 .medicines-table th {
-  padding: 10px 8px;
+  padding: 6px 5px;
   text-align: left;
   font-weight: 600;
   color: var(--bill-table-header-text);
   border-bottom: 2px solid var(--bill-border);
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.3px;
 }
@@ -189,7 +192,7 @@
 }
 
 .medicines-table td {
-  padding: 10px 8px;
+  padding: 5px 5px;
   vertical-align: top;
 }
 
@@ -213,7 +216,7 @@
 .totals-section {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 8mm;
+  margin-bottom: 4mm;
 }
 
 .totals-box {
@@ -243,10 +246,10 @@
 /* Footer */
 .bill-footer {
   margin-top: auto;
-  padding-top: 8mm;
+  padding-top: 4mm;
   border-top: 1px solid var(--bill-border);
   text-align: center;
-  font-size: 10px;
+  font-size: 9px;
   color: var(--bill-secondary);
 }
 

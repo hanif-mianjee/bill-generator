@@ -362,3 +362,129 @@
 .bill-preview[data-template="split-design"] .customer-section .customer-name {
   color: #ffffff;
 }
+
+/* Template 21: Thermal Print (80mm thermal printer style) */
+.bill-preview[data-template="thermal-print"] {
+  --bill-bg: #ffffff;
+  --bill-text: #000000;
+  --bill-primary: #000000;
+  --bill-secondary: #333333;
+  --bill-border: #000000;
+  --bill-header-bg: #ffffff;
+  --bill-header-text: #000000;
+  --bill-table-header-bg: #ffffff;
+  --bill-table-header-text: #000000;
+  --bill-table-stripe: #ffffff;
+  --bill-accent: #000000;
+  --bill-font: 'Courier New', 'Lucida Console', Monaco, monospace;
+  font-size: 10px;
+  line-height: 1.3;
+}
+
+.bill-preview[data-template="thermal-print"] .bill-header {
+  border-bottom: 1px dashed #000;
+  padding-bottom: 3mm;
+  margin-bottom: 2mm;
+}
+
+.bill-preview[data-template="thermal-print"] .store-logo {
+  display: none;
+}
+
+.bill-preview[data-template="thermal-print"] .store-details h2 {
+  font-size: 14px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.bill-preview[data-template="thermal-print"] .store-details .tagline {
+  text-align: center;
+  font-size: 9px;
+}
+
+.bill-preview[data-template="thermal-print"] .store-details .address {
+  text-align: center;
+  font-size: 9px;
+}
+
+.bill-preview[data-template="thermal-print"] .store-details .license-info {
+  text-align: center;
+  font-size: 8px;
+}
+
+.bill-preview[data-template="thermal-print"] .store-info {
+  flex-direction: column;
+  width: 100%;
+}
+
+.bill-preview[data-template="thermal-print"] .bill-info {
+  width: 100%;
+  text-align: center;
+  margin-top: 2mm;
+}
+
+.bill-preview[data-template="thermal-print"] .bill-info h3 {
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.bill-preview[data-template="thermal-print"] .customer-section {
+  background: none;
+  border-top: 1px dashed #000;
+  border-bottom: 1px dashed #000;
+  border-radius: 0;
+  padding: 2mm 0;
+  margin-bottom: 2mm;
+}
+
+.bill-preview[data-template="thermal-print"] .medicines-table {
+  font-size: 9px;
+}
+
+.bill-preview[data-template="thermal-print"] .medicines-table th {
+  font-size: 8px;
+  padding: 3px 2px;
+  border-bottom: 1px dashed #000;
+}
+
+.bill-preview[data-template="thermal-print"] .medicines-table td {
+  padding: 3px 2px;
+  border-bottom: 1px dotted #ccc;
+}
+
+.bill-preview[data-template="thermal-print"] .medicines-table .medicine-generic,
+.bill-preview[data-template="thermal-print"] .medicines-table .medicine-strength {
+  font-size: 8px;
+}
+
+.bill-preview[data-template="thermal-print"] .totals-section {
+  border-top: 1px dashed #000;
+  padding-top: 2mm;
+}
+
+.bill-preview[data-template="thermal-print"] .totals-box {
+  width: 100%;
+}
+
+.bill-preview[data-template="thermal-print"] .total-row {
+  font-size: 10px;
+  padding: 2px 0;
+}
+
+.bill-preview[data-template="thermal-print"] .total-row.grand-total {
+  font-size: 12px;
+  border-top: 1px dashed #000;
+}
+
+.bill-preview[data-template="thermal-print"] .bill-footer {
+  border-top: 1px dashed #000;
+  padding-top: 2mm;
+}
+
+.bill-preview[data-template="thermal-print"] .bill-footer .thank-you {
+  font-size: 11px;
+}
+
+.bill-preview[data-template="thermal-print"] .bill-footer .terms {
+  font-size: 7px;
+}

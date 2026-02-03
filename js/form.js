@@ -1,6 +1,7 @@
 /**
  * Form Handler
  * Manages form inputs, validation, and live updates
+ * Supports multiple bill amounts
  */
 
 class FormHandler {
@@ -9,7 +10,8 @@ class FormHandler {
     this.inputs = {
       customerName: document.getElementById('customerName'),
       billDate: document.getElementById('billDate'),
-      totalAmount: document.getElementById('totalAmount'),
+      totalAmounts: document.getElementById('totalAmounts'),
+      totalAmount: document.getElementById('totalAmount'), // Hidden field for compatibility
       storeSelect: document.getElementById('storeSelect'),
       templateSelect: document.getElementById('templateSelect'),
       paperSizeSelect: document.getElementById('paperSizeSelect')
@@ -17,7 +19,7 @@ class FormHandler {
     this.errors = {
       customerName: document.getElementById('customerNameError'),
       billDate: document.getElementById('billDateError'),
-      totalAmount: document.getElementById('totalAmountError')
+      totalAmounts: document.getElementById('totalAmountsError')
     };
 
     this.onChange = options.onChange || (() => {});
@@ -62,9 +64,9 @@ class FormHandler {
       this.debouncedOnChange();
     });
 
-    // Total amount
-    this.inputs.totalAmount.addEventListener('input', () => {
-      this.validateField('totalAmount');
+    // Total amounts (textarea for multiple)
+    this.inputs.totalAmounts.addEventListener('input', () => {
+      this.validateField('totalAmounts');
       this.debouncedOnChange();
     });
 
@@ -102,6 +104,21 @@ class FormHandler {
   }
 
   /**
+   * Parse amounts from textarea
+   */
+  parseAmounts() {
+    const text = this.inputs.totalAmounts.value.trim();
+    if (!text) return [];
+
+    return text
+      .split(/[\n,]+/)
+      .map(line => line.trim())
+      .filter(line => line.length > 0)
+      .map(line => parseFloat(line.replace(/[^\d.]/g, '')))
+      .filter(amount => !isNaN(amount) && amount >= 100 && amount <= 500000);
+  }
+
+  /**
    * Validate a specific field
    */
   validateField(fieldName) {
@@ -128,20 +145,40 @@ class FormHandler {
         }
         break;
 
-      case 'totalAmount':
-        const amount = parseFloat(input.value);
-        if (!input.value) {
+      case 'totalAmounts':
+        const amounts = this.parseAmounts();
+        const rawText = input.value.trim();
+        if (!rawText) {
           isValid = false;
-          errorMessage = 'Total amount is required';
-        } else if (isNaN(amount)) {
+          errorMessage = 'At least one amount is required';
+        } else if (amounts.length === 0) {
           isValid = false;
-          errorMessage = 'Please enter a valid number';
-        } else if (amount < 100) {
-          isValid = false;
-          errorMessage = 'Minimum amount is PKR 100';
-        } else if (amount > 500000) {
-          isValid = false;
-          errorMessage = 'Maximum amount is PKR 500,000';
+          errorMessage = 'Enter valid amounts (PKR 100 - 500,000)';
+        } else {
+          // Check each line
+          const lines = rawText.split(/[\n,]+/).filter(l => l.trim());
+          for (const line of lines) {
+            const amount = parseFloat(line.trim().replace(/[^\d.]/g, ''));
+            if (isNaN(amount)) {
+              isValid = false;
+              errorMessage = 'Invalid number found';
+              break;
+            }
+            if (amount < 100) {
+              isValid = false;
+              errorMessage = 'Minimum amount is PKR 100';
+              break;
+            }
+            if (amount > 500000) {
+              isValid = false;
+              errorMessage = 'Maximum amount is PKR 500,000';
+              break;
+            }
+          }
+        }
+        // Update hidden field with first amount for preview
+        if (amounts.length > 0) {
+          this.inputs.totalAmount.value = amounts[0];
         }
         break;
     }
@@ -166,9 +203,9 @@ class FormHandler {
   validate() {
     const nameValid = this.validateField('customerName');
     const dateValid = this.validateField('billDate');
-    const amountValid = this.validateField('totalAmount');
+    const amountsValid = this.validateField('totalAmounts');
 
-    return nameValid && dateValid && amountValid;
+    return nameValid && dateValid && amountsValid;
   }
 
   /**
@@ -177,14 +214,12 @@ class FormHandler {
   isValid() {
     const name = this.inputs.customerName.value.trim();
     const date = this.inputs.billDate.value;
-    const amount = parseFloat(this.inputs.totalAmount.value);
+    const amounts = this.parseAmounts();
 
     return (
       name.length >= 2 &&
       date &&
-      !isNaN(amount) &&
-      amount >= 100 &&
-      amount <= 500000
+      amounts.length > 0
     );
   }
 
@@ -192,10 +227,12 @@ class FormHandler {
    * Get form data
    */
   getFormData() {
+    const amounts = this.parseAmounts();
     return {
       customerName: this.inputs.customerName.value.trim(),
       billDate: this.inputs.billDate.value,
-      totalAmount: parseFloat(this.inputs.totalAmount.value) || 0,
+      totalAmount: amounts[0] || 0,
+      totalAmounts: amounts,
       storeId: this.inputs.storeSelect.value,
       templateId: this.inputs.templateSelect.value,
       paperSizeId: this.inputs.paperSizeSelect.value
@@ -234,6 +271,13 @@ class FormHandler {
    */
   setTemplate(templateId) {
     this.inputs.templateSelect.value = templateId;
+  }
+
+  /**
+   * Set store value
+   */
+  setStore(storeId) {
+    this.inputs.storeSelect.value = storeId;
   }
 
   /**

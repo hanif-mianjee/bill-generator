@@ -1,6 +1,7 @@
 /**
  * Main Application
  * Orchestrates all components of the Medical Bill Generator
+ * Supports multiple bills generation in single PDF
  */
 
 class App {
@@ -10,7 +11,8 @@ class App {
     this.paperSizes = [];
     this.selectedMedicines = [];
     this.currentStore = null;
-    this.currentPaperSize = 'a4';
+    this.currentPaperSize = 'thermal';
+    this.currentStoreIndex = 0;
 
     // Initialize components
     this.templateManager = new TemplateManager();
@@ -23,6 +25,7 @@ class App {
     this.regenerateBtn = document.getElementById('regenerateBtn');
     this.downloadBtn = document.getElementById('downloadBtn');
     this.randomTemplateBtn = document.getElementById('randomTemplate');
+    this.randomStoreBtn = document.getElementById('randomStore');
   }
 
   /**
@@ -43,8 +46,12 @@ class App {
       this.formHandler.populateTemplates(this.templateManager.getAll());
       this.formHandler.populatePaperSizes(this.paperSizes);
 
-      // Set initial store
+      // Set initial store and template (defaults)
       this.currentStore = this.stores[0];
+
+      // Set default template to thermal-print
+      this.preview.setTemplate('thermal-print');
+      this.preview.setPaperSize('thermal');
 
       // Set up event listeners
       this.setupEventListeners();
@@ -88,6 +95,13 @@ class App {
     this.randomTemplateBtn.addEventListener('click', () => {
       this.selectRandomTemplate();
     });
+
+    // Random store button
+    if (this.randomStoreBtn) {
+      this.randomStoreBtn.addEventListener('click', () => {
+        this.selectRandomStore();
+      });
+    }
   }
 
   /**
@@ -114,6 +128,7 @@ class App {
    */
   updateStore(storeId) {
     this.currentStore = this.stores.find(s => s.id === storeId) || this.stores[0];
+    this.currentStoreIndex = this.stores.findIndex(s => s.id === storeId);
   }
 
   /**
@@ -141,7 +156,15 @@ class App {
     });
 
     // Enable download button if valid
+    const hasMultipleBills = formData.totalAmounts && formData.totalAmounts.length > 1;
     this.downloadBtn.disabled = !this.formHandler.isValid() || this.selectedMedicines.length === 0;
+
+    // Update download button text
+    if (hasMultipleBills) {
+      this.downloadBtn.innerHTML = `<span class="icon">&#8681;</span> Download ${formData.totalAmounts.length} Bills`;
+    } else {
+      this.downloadBtn.innerHTML = '<span class="icon">&#8681;</span> Download PDF';
+    }
   }
 
   /**
@@ -170,7 +193,32 @@ class App {
   }
 
   /**
-   * Download PDF
+   * Select random store
+   */
+  selectRandomStore() {
+    const randomIndex = Math.floor(Math.random() * this.stores.length);
+    this.currentStoreIndex = randomIndex;
+    this.currentStore = this.stores[randomIndex];
+    this.formHandler.setStore(this.currentStore.id);
+
+    // Update preview with new store
+    const formData = this.formHandler.getFormData();
+    if (this.formHandler.isValid()) {
+      this.updatePreview(formData);
+    }
+  }
+
+  /**
+   * Generate a random date within range
+   */
+  generateRandomDate(baseDate, daysOffset) {
+    const date = new Date(baseDate);
+    date.setDate(date.getDate() - daysOffset);
+    return date.toISOString().split('T')[0];
+  }
+
+  /**
+   * Download PDF - handles single or multiple bills
    */
   async downloadPDF() {
     const formData = this.formHandler.getFormData();
@@ -180,16 +228,91 @@ class App {
       return;
     }
 
-    if (this.selectedMedicines.length === 0) {
-      alert('No medicines selected. Please enter a valid amount.');
+    const amounts = formData.totalAmounts || [formData.totalAmount];
+
+    if (amounts.length === 0) {
+      alert('No valid amounts entered.');
       return;
     }
 
-    await this.pdfGenerator.generate(this.preview.getElement(), {
-      customerName: formData.customerName,
-      billNumber: this.preview.getBillNumber(),
-      paperSize: formData.paperSizeId || 'a4'
-    });
+    // Single bill
+    if (amounts.length === 1) {
+      if (this.selectedMedicines.length === 0) {
+        alert('No medicines selected. Please enter a valid amount.');
+        return;
+      }
+
+      await this.pdfGenerator.generate(this.preview.getElement(), {
+        customerName: formData.customerName,
+        billNumber: this.preview.getBillNumber(),
+        paperSize: formData.paperSizeId || 'thermal'
+      });
+      return;
+    }
+
+    // Multiple bills - generate each bill and combine into one PDF
+    await this.generateMultipleBills(formData, amounts);
+  }
+
+  /**
+   * Generate multiple bills in a single PDF
+   */
+  async generateMultipleBills(formData, amounts) {
+    const billElements = [];
+    const baseDate = new Date(formData.billDate);
+
+    // Create a temporary container for bill generation
+    const tempContainer = document.createElement('div');
+    tempContainer.style.position = 'absolute';
+    tempContainer.style.left = '-9999px';
+    document.body.appendChild(tempContainer);
+
+    try {
+      for (let i = 0; i < amounts.length; i++) {
+        const amount = amounts[i];
+
+        // Generate different medicines for each bill
+        const medicines = this.medicineSelector.selectMedicines(amount);
+
+        // Generate different date for each bill (spread over days)
+        const billDate = this.generateRandomDate(baseDate, i);
+
+        // Create a new preview instance for this bill
+        const billPreview = new BillPreview();
+        const billContainer = document.createElement('div');
+        billContainer.id = `billPreview_${i}`;
+        billContainer.className = 'bill-preview';
+        billContainer.setAttribute('data-template', formData.templateId);
+        tempContainer.appendChild(billContainer);
+
+        // Update the preview's container reference
+        billPreview.container = billContainer;
+        billPreview.regenerateBillNumber();
+        billPreview.setTemplate(formData.templateId);
+        billPreview.setPaperSize(formData.paperSizeId);
+
+        // Render the bill
+        billPreview.render({
+          customerName: formData.customerName,
+          billDate: billDate,
+          selectedMedicines: medicines,
+          store: this.currentStore,
+          totalAmount: amount
+        });
+
+        billElements.push(billContainer);
+      }
+
+      // Generate the combined PDF
+      await this.pdfGenerator.generateMultiple(billElements, {
+        customerName: formData.customerName,
+        paperSize: formData.paperSizeId || 'thermal'
+      });
+
+    } finally {
+      // Clean up
+      document.body.removeChild(tempContainer);
+    }
   }
 }
 
