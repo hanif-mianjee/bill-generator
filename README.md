@@ -60,23 +60,43 @@ When you select **Thermal (80mm)** paper size, the template automatically switch
 
 ```
 bill-generator/
-├── index.html              # Main application entry point
-├── README.md               # This file
+├── index.html                     # Main application entry point
+├── README.md                      # This file
 ├── css/
-│   ├── main.css            # Global styles, reset, utilities
-│   ├── form.css            # Form component styles
-│   ├── preview.css         # Bill preview base styles
+│   ├── main.css                   # Global styles, reset, utilities, layout
+│   ├── form.css                   # Form component styling
+│   ├── preview.css                # Bill preview container and responsive styles
 │   └── templates/
-│       └── templates.css   # All 21 template style variations
+│       └── templates.css          # All 21 template CSS variations
 └── js/
-    ├── data.js             # Embedded data (medicines, stores, templates)
-    ├── app.js              # Main application initialization
-    ├── form.js             # Form handling and validation
-    ├── preview.js          # Bill preview rendering
-    ├── pdf.js              # PDF generation with paper size support
-    ├── medicine-selector.js # Algorithm for selecting medicines
-    └── template-manager.js  # Template cycling and management
+    ├── data.js                    # Embedded data (medicines, stores, paper sizes)
+    ├── app.js                     # Main app controller and orchestration
+    ├── form.js                    # Form handling, validation, and data collection
+    ├── preview.js                 # Bill preview rendering (single & multiple)
+    ├── pdf.js                     # PDF generation via browser print functionality
+    ├── medicine-selector.js       # Medicine selection algorithm for bill totals
+    └── template-manager.js        # Template management and cycling
 ```
+
+### File Descriptions
+
+#### HTML
+- **index.html**: Complete application UI including form, preview section, and all necessary HTML structure
+
+#### CSS
+- **main.css**: Global styles, CSS custom properties, layout grid, color scheme
+- **form.css**: Form inputs, buttons, dropdowns, validation states
+- **preview.css**: Bill preview container, paper size declarations, responsive breakpoints, print styles
+- **templates.css**: 21 unique template color schemes using CSS variables
+
+#### JavaScript
+- **data.js**: Embedded application data - medicines (90+), stores (30), paper sizes, templates
+- **app.js**: Main App class - initialization, state management, event listeners, preview updates
+- **form.js**: FormHandler class - form validation, data extraction, event handling
+- **preview.js**: BillPreview class - renders single/multiple bills, manages bill numbers and dates
+- **pdf.js**: PDFGenerator class - opens print dialog with proper paper size configuration
+- **medicine-selector.js**: MedicineSelector class - algorithm for selecting medicines to match bill amount
+- **template-manager.js**: TemplateManager class - manages and cycles through 21 templates
 
 ## Medicine Categories
 
@@ -165,9 +185,10 @@ Works in all modern browsers:
 - Edge
 
 ### Technologies Used
-- Vanilla JavaScript (ES6+)
-- CSS3 with Custom Properties
-- html2pdf.js for PDF generation
+- **Vanilla JavaScript** (ES6+ Classes and Modules)
+- **CSS3** with Custom Properties (Variables) and Flexbox
+- **Browser Native Print API** for PDF generation
+- **No external dependencies** - works completely standalone
 
 ## Troubleshooting
 

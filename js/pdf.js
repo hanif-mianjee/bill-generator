@@ -7,6 +7,16 @@
 class PDFGenerator {
   constructor() {
     this.loadingOverlay = document.getElementById('loadingOverlay');
+    
+    // Paper size configurations for @page CSS
+    this.paperConfigs = {
+      'thermal': { width: '80mm', height: 'auto' },
+      'a4': { width: '210mm', height: '297mm' },
+      'a5': { width: '148mm', height: '210mm' },
+      'letter': { width: '8.5in', height: '11in' },
+      'legal': { width: '8.5in', height: '14in' },
+      'half-letter': { width: '5.5in', height: '8.5in' }
+    };
   }
 
   /**
@@ -37,7 +47,10 @@ class PDFGenerator {
    * @param {Object} options - Generation options
    */
   async generate(previewElement, options = {}) {
-    const { customerName = 'Customer' } = options;
+    const { 
+      customerName = 'Customer',
+      paperSize = 'a4'
+    } = options;
 
     this.showLoading('Preparing print preview...');
 
@@ -50,6 +63,9 @@ class PDFGenerator {
         this.hideLoading();
         return false;
       }
+
+      // Get paper config for dynamic page size
+      const paper = this.paperConfigs[paperSize] || this.paperConfigs['a4'];
 
       // Get all stylesheets from the main document
       const stylesheets = this.getStylesheetLinks();
@@ -70,11 +86,10 @@ class PDFGenerator {
   <title>Bill - ${customerName}</title>
   ${stylesheets}
   <style>
-    /* Minimal print overrides - keep everything else the same */
-    @media print {
-      @page {
-        margin: 0;
-      }
+    /* Dynamic page size based on selected paper */
+    @page {
+      size: ${paper.width} ${paper.height};
+      margin: 0;
     }
     
     * {
