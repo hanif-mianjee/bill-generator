@@ -286,3 +286,13 @@
     margin: 0;
   }
 }
+
+/* Multiple Bills / Page Break Support */
+.bill-page {
+  page-break-after: always;
+  page-break-inside: avoid;
+}
+
+.bill-page:last-child {
+  page-break-after: auto;
+}

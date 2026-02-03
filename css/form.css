@@ -123,7 +123,51 @@ input[type="number"].form-input {
   min-height: 1rem;
 }
 
-/* Template Controls */
+/* Select with Action Button (Shuffle) */
+.select-with-action {
+  display: flex;
+  gap: var(--spacing-2);
+  align-items: stretch;
+}
+
+.select-with-action .form-input {
+  flex: 1;
+}
+
+/* Shuffle Button - Prominent Style */
+.btn-shuffle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--spacing-2) var(--spacing-3);
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+  background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+}
+
+.btn-shuffle:hover {
+  background: linear-gradient(135deg, #7c3aed 0%, #4f46e5 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(99, 102, 241, 0.4);
+}
+
+.btn-shuffle:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
+}
+
+.btn-shuffle svg {
+  flex-shrink: 0;
+}
+
+/* Legacy template-controls (keep for compatibility) */
 .template-controls {
   display: flex;
   gap: var(--spacing-2);
@@ -150,6 +194,14 @@ input[type="number"].form-input {
 
 .form-actions .btn {
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+}
+
+.form-actions .btn svg {
+  flex-shrink: 0;
 }
 
 /* Responsive */
@@ -166,5 +218,16 @@ input[type="number"].form-input {
 @media (max-width: 1024px) {
   .form-section {
     position: static;
+  }
+}
+
+/* Small screens - stack shuffle button below select */
+@media (max-width: 400px) {
+  .select-with-action {
+    flex-direction: column;
+  }
+
+  .btn-shuffle {
+    justify-content: center;
   }
 }

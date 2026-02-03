@@ -7,6 +7,7 @@ A professional, production-ready medical bill generator application that works e
 - **No Server Required**: Works directly from the file system - just open `index.html` in your browser
 - **Multiple Bills Support**: Enter multiple amounts to generate multiple bills in a single PDF
 - **Automatic Medicine Selection**: Intelligent algorithm selects medicines to match your target amount (bill total always >= entered amount)
+- **Different Dates Per Bill**: Each bill in a multi-bill PDF gets a unique date (spread over multiple days)
 - **90+ Pakistani Medicines**: Comprehensive database including all major categories
 - **30 Pharmacy Stores**: Covering major Pakistani cities
 - **21 Professional Templates**: Including thermal printer style (default)
@@ -22,8 +23,8 @@ A professional, production-ready medical bill generator application that works e
    - Customer Name
    - Bill Date
    - Total Amount(s) - enter one amount per line for multiple bills
-4. Select a pharmacy store (use the cycle button for random selection)
-5. Choose a bill template (thermal print is default)
+4. Select a pharmacy store (click purple **Shuffle** button for random)
+5. Choose a bill template (click purple **Shuffle** button for random)
 6. Select paper size (thermal 80mm is default)
 7. Click "Download PDF" to save your bill(s)
 
@@ -34,7 +35,7 @@ A professional, production-ready medical bill generator application that works e
 2. Enter a single amount (e.g., `5000`)
 3. Click "Download PDF"
 
-### Multiple Bills
+### Multiple Bills (One PDF)
 1. Enter customer name and date
 2. Enter multiple amounts, one per line:
    ```
@@ -43,13 +44,17 @@ A professional, production-ready medical bill generator application that works e
    3200
    12000
    ```
-3. Click "Download X Bills" - all bills will be in one PDF
-4. Each bill gets unique medicines and sequential dates
+3. Click "Download X Bills" - all bills combined in one PDF
+4. Each bill automatically gets:
+   - **Different medicines** (unique selection per bill)
+   - **Different dates** (spread 1-3 days apart going backwards)
+   - **Unique bill number**
 
-### Cycle Buttons
-- **Template Cycle**: Click the refresh icon next to template dropdown for random template
-- **Store Cycle**: Click the refresh icon next to store dropdown for random store
-- **Regenerate**: Click "Regenerate Medicines" for different medicine combinations
+### Shuffle Buttons
+The purple **Shuffle** buttons next to Store and Template dropdowns let you quickly randomize your selection. Click them to try different stores or templates instantly.
+
+### Paper Size & Template Auto-Switch
+When you select **Thermal (80mm)** paper size, the template automatically switches to **Thermal Print** for optimal formatting.
 
 ## Project Structure
 
@@ -147,6 +152,11 @@ bill-generator/
 - Selects 3-8 items depending on amount
 - Different medicines for each bill in multi-bill mode
 
+### Multi-Bill Date Generation
+- First bill uses the selected date
+- Subsequent bills get dates going backwards (1-3 days apart randomly)
+- Creates realistic date spread for multiple bills
+
 ### Browser Compatibility
 Works in all modern browsers:
 - Chrome (recommended)
@@ -161,13 +171,17 @@ Works in all modern browsers:
 
 ## Troubleshooting
 
-### PDF has multiple pages
+### PDF has multiple pages for single bill
 - Use thermal or A5 paper size for single-page bills
 - The app automatically reduces spacing for compact output
 
 ### Bill total doesn't match entered amount
 - Bill total will always be **equal to or slightly higher** than entered amount
 - This ensures the bill is never less than requested
+
+### Shuffle buttons not visible
+- Look for the purple "Shuffle" buttons next to Store and Template dropdowns
+- They have text labels and hover effects for better visibility
 
 ### Logos not showing
 - Logos are embedded as SVG data URIs - no external files needed
