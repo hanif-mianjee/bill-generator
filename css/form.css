@@ -1,0 +1,162 @@
+/* Form Section Styles */
+.form-section {
+  background-color: var(--color-white);
+  padding: var(--spacing-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  height: fit-content;
+  position: sticky;
+  top: var(--spacing-4);
+}
+
+/* Form Layout */
+.bill-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5);
+}
+
+/* Form Group */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+/* Labels */
+.form-label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-gray-700);
+}
+
+.form-label .required {
+  color: var(--color-error);
+}
+
+/* Inputs */
+.form-input {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-base);
+  font-family: inherit;
+  color: var(--color-gray-800);
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-300);
+  border-radius: var(--radius-md);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-input:disabled {
+  background-color: var(--color-gray-100);
+  cursor: not-allowed;
+}
+
+.form-input::placeholder {
+  color: var(--color-gray-400);
+}
+
+/* Input States */
+.form-input.error {
+  border-color: var(--color-error);
+}
+
+.form-input.error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-input.success {
+  border-color: var(--color-success);
+}
+
+/* Select Styling */
+select.form-input {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem;
+  padding-right: 2.5rem;
+}
+
+/* Date Input */
+input[type="date"].form-input {
+  cursor: pointer;
+}
+
+/* Number Input - Remove Spinners */
+input[type="number"].form-input::-webkit-outer-spin-button,
+input[type="number"].form-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"].form-input {
+  -moz-appearance: textfield;
+}
+
+/* Hint Text */
+.hint {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+}
+
+/* Error Message */
+.error-message {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  min-height: 1rem;
+}
+
+/* Template Controls */
+.template-controls {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.template-controls .form-input {
+  flex: 1;
+}
+
+.template-controls .btn {
+  padding: var(--spacing-3);
+  min-width: 44px;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+  margin-top: var(--spacing-4);
+  padding-top: var(--spacing-4);
+  border-top: 1px solid var(--color-gray-200);
+}
+
+.form-actions .btn {
+  width: 100%;
+}
+
+/* Responsive */
+@media (min-width: 480px) {
+  .form-actions {
+    flex-direction: row;
+  }
+
+  .form-actions .btn {
+    flex: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .form-section {
+    position: static;
+  }
+}

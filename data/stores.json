@@ -1,0 +1,304 @@
+{
+  "stores": [
+    {
+      "id": "STORE001",
+      "name": "Al-Shifa Medical Store",
+      "tagline": "Your Health, Our Priority",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyOCIgZmlsbD0iIzAwNzU1MCIvPjxwYXRoIGQ9Ik0yNSAxOFY0Mkg1NVYxOEgyNVoiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTE4IDI1SDQyVjM1SDE4VjI1WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=",
+      "address": {
+        "street": "Shop #12, Main Boulevard",
+        "area": "Gulberg III",
+        "city": "Lahore",
+        "phone": "042-35761234",
+        "mobile": "0300-1234567"
+      },
+      "license": "DL-PB-12345",
+      "ntn": "1234567-8"
+    },
+    {
+      "id": "STORE002",
+      "name": "Sehat Pharmacy",
+      "tagline": "Complete Healthcare Solutions",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSI1IiB5PSI1IiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHJ4PSI4IiBmaWxsPSIjMDA2NkNDIi8+PHBhdGggZD0iTTI1IDE1VjQ1SDM1VjE1SDI1WiIgZmlsbD0id2hpdGUiLz48cGF0aCBkPSJNMTUgMjVINDVWMzVIMTVWMjVaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==",
+      "address": {
+        "street": "145-C, Commercial Area",
+        "area": "DHA Phase 5",
+        "city": "Lahore",
+        "phone": "042-35697412",
+        "mobile": "0321-9876543"
+      },
+      "license": "DL-PB-23456",
+      "ntn": "2345678-9"
+    },
+    {
+      "id": "STORE003",
+      "name": "Medina Chemist",
+      "tagline": "Trusted Since 1985",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyNSIgc3Ryb2tlPSIjMjI4QjIyIiBzdHJva2Utd2lkdGg9IjQiIGZpbGw9Im5vbmUiLz48dGV4dCB4PSIzMCIgeT0iMzgiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiMyMjhCMjIiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5NPC90ZXh0Pjwvc3ZnPg==",
+      "address": {
+        "street": "Shop #5, Model Town Link Road",
+        "area": "Model Town",
+        "city": "Lahore",
+        "phone": "042-35162789",
+        "mobile": "0333-4567890"
+      },
+      "license": "DL-PB-34567",
+      "ntn": "3456789-0"
+    },
+    {
+      "id": "STORE004",
+      "name": "Karachi Medical Center",
+      "tagline": "24/7 Healthcare Partner",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iNDQiIGhlaWdodD0iNDQiIGZpbGw9IiNEQzE0M0MiLz48cGF0aCBkPSJNMjYgMTZWNDRIMzRWMTZIMjZaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0xNiAyNkg0NFYzNEgxNlYyNloiIGZpbGw9IndoaXRlIi8+PC9zdmc+",
+      "address": {
+        "street": "A-23, Block 7",
+        "area": "Clifton",
+        "city": "Karachi",
+        "phone": "021-35836921",
+        "mobile": "0345-1234567"
+      },
+      "license": "DL-SD-45678",
+      "ntn": "4567890-1"
+    },
+    {
+      "id": "STORE005",
+      "name": "Fazal Din's Pharma",
+      "tagline": "Quality Medicines Guaranteed",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyOCIgZmlsbD0iIzRCMDA4MiIvPjx0ZXh0IHg9IjMwIiB5PSI0MCIgZm9udC1zaXplPSIyOCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5GRDwvdGV4dD48L3N2Zz4=",
+      "address": {
+        "street": "18-Main Tariq Road",
+        "area": "PECHS",
+        "city": "Karachi",
+        "phone": "021-34536789",
+        "mobile": "0312-9876543"
+      },
+      "license": "DL-SD-56789",
+      "ntn": "5678901-2"
+    },
+    {
+      "id": "STORE006",
+      "name": "Islamabad Pharmacy",
+      "tagline": "Modern Medicine, Traditional Care",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcng9IjIwIiBmaWxsPSIjMDA4MDgwIi8+PHBhdGggZD0iTTI1IDIwVjQwSDM1VjIwSDI1WiIgZmlsbD0id2hpdGUiLz48cGF0aCBkPSJNMjAgMjVINDBWMzVIMjBWMjVaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==",
+      "address": {
+        "street": "Shop #8, Jinnah Super Market",
+        "area": "F-7 Markaz",
+        "city": "Islamabad",
+        "phone": "051-2654789",
+        "mobile": "0300-5678901"
+      },
+      "license": "DL-ICT-67890",
+      "ntn": "6789012-3"
+    },
+    {
+      "id": "STORE007",
+      "name": "Blue Area Chemist",
+      "tagline": "Your Neighborhood Pharmacy",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyOCIgZmlsbD0iIzFBNUZCNCIvPjxwYXRoIGQ9Ik0yNCAxOFY0Mkg0NlYxOEgyNFoiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTE0IDI0SDQ2VjM2SDE0VjI0WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=",
+      "address": {
+        "street": "Office #3, Ufone Tower",
+        "area": "Blue Area",
+        "city": "Islamabad",
+        "phone": "051-2871234",
+        "mobile": "0321-2345678"
+      },
+      "license": "DL-ICT-78901",
+      "ntn": "7890123-4"
+    },
+    {
+      "id": "STORE008",
+      "name": "Rawalpindi Medical Hall",
+      "tagline": "Serving Since 1970",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIGZpbGw9IiM4QjQ1MTMiLz48dGV4dCB4PSIzMCIgeT0iNDAiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+Uk1IPC90ZXh0Pjwvc3ZnPg==",
+      "address": {
+        "street": "121-A, Bank Road",
+        "area": "Saddar",
+        "city": "Rawalpindi",
+        "phone": "051-5556789",
+        "mobile": "0333-8901234"
+      },
+      "license": "DL-PB-89012",
+      "ntn": "8901234-5"
+    },
+    {
+      "id": "STORE009",
+      "name": "Faisalabad Drugstore",
+      "tagline": "Health First, Always",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyNSIgZmlsbD0iIzJFOEI1NyIvPjxwYXRoIGQ9Ik0yNiAyMFY0MEgzNFYyMEgyNloiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTIwIDI2SDQwVjM0SDIwVjI2WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=",
+      "address": {
+        "street": "Shop #45, D-Ground",
+        "area": "Peoples Colony",
+        "city": "Faisalabad",
+        "phone": "041-8765432",
+        "mobile": "0345-6789012"
+      },
+      "license": "DL-PB-90123",
+      "ntn": "9012345-6"
+    },
+    {
+      "id": "STORE010",
+      "name": "Multan Pharmacy",
+      "tagline": "City of Saints, Store of Health",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSI1IiB5PSI1IiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHJ4PSI1IiBmaWxsPSIjRkY2QjM1Ii8+PHBhdGggZD0iTTI1IDE1VjQ1SDM1VjE1SDI1WiIgZmlsbD0id2hpdGUiLz48cGF0aCBkPSJNMTUgMjVINDVWMzVIMTVWMjVaIiBmaWxsPSJ3aGl0ZSIvPjwvc3ZnPg==",
+      "address": {
+        "street": "Near GPO, Kutchery Road",
+        "area": "Chowk Ghanta Ghar",
+        "city": "Multan",
+        "phone": "061-4567890",
+        "mobile": "0312-3456789"
+      },
+      "license": "DL-PB-01234",
+      "ntn": "0123456-7"
+    },
+    {
+      "id": "STORE011",
+      "name": "Peshawar Chemist",
+      "tagline": "Gateway to Health",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyOCIgZmlsbD0iIzgwMDAwMCIvPjxwYXRoIGQ9Ik0yNCAxOFY0Mkg0NlYxOEgyNFoiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTE0IDI0SDQ2VjM2SDE0VjI0WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=",
+      "address": {
+        "street": "Shop #7, Saddar Road",
+        "area": "University Town",
+        "city": "Peshawar",
+        "phone": "091-5234567",
+        "mobile": "0300-7890123"
+      },
+      "license": "DL-KP-11234",
+      "ntn": "1123456-8"
+    },
+    {
+      "id": "STORE012",
+      "name": "Quetta Medical Store",
+      "tagline": "Balochistan's Trusted Pharmacy",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iNDQiIGhlaWdodD0iNDQiIHJ4PSI4IiBmaWxsPSIjMkY0RjRGIi8+PHRleHQgeD0iMzAiIHk9IjQwIiBmb250LXNpemU9IjIwIiBmaWxsPSJ3aGl0ZSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9ImJvbGQiPlFNUzwvdGV4dD48L3N2Zz4=",
+      "address": {
+        "street": "Jinnah Road, Near GPO",
+        "area": "Cantonment",
+        "city": "Quetta",
+        "phone": "081-2834567",
+        "mobile": "0333-1234567"
+      },
+      "license": "DL-BL-22345",
+      "ntn": "2234567-9"
+    },
+    {
+      "id": "STORE013",
+      "name": "HealthPlus Pharmacy",
+      "tagline": "More Than Medicine",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyOCIgZmlsbD0iIzAwQkZGRiIvPjxwYXRoIGQ9Ik0yNSAxOFY0Mkg1NVYxOEgyNVoiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTE4IDI1SDQyVjM1SDE4VjI1WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=",
+      "address": {
+        "street": "Ground Floor, Packages Mall",
+        "area": "Walton Road",
+        "city": "Lahore",
+        "phone": "042-35123456",
+        "mobile": "0321-5678901"
+      },
+      "license": "DL-PB-33456",
+      "ntn": "3345678-0"
+    },
+    {
+      "id": "STORE014",
+      "name": "D. Watson Pharmacy",
+      "tagline": "Your Family Pharmacy",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSI1IiB5PSI1IiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiNFQTdFMDAiLz48dGV4dCB4PSIzMCIgeT0iNDIiIGZvbnQtc2l6ZT0iMjgiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmb250LXdlaWdodD0iYm9sZCI+RFc8L3RleHQ+PC9zdmc+",
+      "address": {
+        "street": "Shop #25, Ocean Mall",
+        "area": "Clifton Block 9",
+        "city": "Karachi",
+        "phone": "021-35891234",
+        "mobile": "0345-8901234"
+      },
+      "license": "DL-SD-44567",
+      "ntn": "4456789-1"
+    },
+    {
+      "id": "STORE015",
+      "name": "Care Pharmacy",
+      "tagline": "Because We Care",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyNSIgZmlsbD0iI0ZGMTQ5MyIvPjxwYXRoIGQ9Ik0yNiAyMFY0MEgzNFYyMEgyNloiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTIwIDI2SDQwVjM0SDIwVjI2WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=",
+      "address": {
+        "street": "House #45, Street 12",
+        "area": "G-10/2",
+        "city": "Islamabad",
+        "phone": "051-2112345",
+        "mobile": "0300-2345678"
+      },
+      "license": "DL-ICT-55678",
+      "ntn": "5567890-2"
+    },
+    {
+      "id": "STORE016",
+      "name": "MediMart",
+      "tagline": "Smart Shopping for Health",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSIxMCIgeT0iMTAiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcng9IjUiIGZpbGw9IiM2QjVCOTUiLz48cGF0aCBkPSJNMjUgMjBWNDBIMzVWMjBIMjVaIiBmaWxsPSJ3aGl0ZSIvPjxwYXRoIGQ9Ik0yMCAyNUg0MFYzNUgyMFYyNVoiIGZpbGw9IndoaXRlIi8+PC9zdmc+",
+      "address": {
+        "street": "Plot #78, Commercial Area",
+        "area": "Bahria Town Phase 4",
+        "city": "Rawalpindi",
+        "phone": "051-5789012",
+        "mobile": "0321-9012345"
+      },
+      "license": "DL-PB-66789",
+      "ntn": "6678901-3"
+    },
+    {
+      "id": "STORE017",
+      "name": "Wellness Pharmacy",
+      "tagline": "Wellness Starts Here",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyOCIgZmlsbD0iIzMyQ0Q1MCIvPjxwYXRoIGQ9Ik0yNCAxOFY0Mkg0NlYxOEgyNFoiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTE0IDI0SDQ2VjM2SDE0VjI0WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=",
+      "address": {
+        "street": "Main Ghazi Road",
+        "area": "Cantt",
+        "city": "Lahore",
+        "phone": "042-36612345",
+        "mobile": "0333-5678901"
+      },
+      "license": "DL-PB-77890",
+      "ntn": "7789012-4"
+    },
+    {
+      "id": "STORE018",
+      "name": "Prime Medical Store",
+      "tagline": "Prime Quality, Prime Service",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSI1IiB5PSI1IiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIHJ4PSIxMCIgZmlsbD0iI0ZGRDCAI/z48dGV4dCB4PSIzMCIgeT0iNDAiIGZvbnQtc2l6ZT0iMjAiIGZpbGw9IiMzMzMiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZvbnQtd2VpZ2h0PSJib2xkIj5QTVMgPC90ZXh0Pjwvc3ZnPg==",
+      "address": {
+        "street": "Shop #12, Kohinoor City",
+        "area": "Jaranwala Road",
+        "city": "Faisalabad",
+        "phone": "041-2567890",
+        "mobile": "0345-2345678"
+      },
+      "license": "DL-PB-88901",
+      "ntn": "8890123-5"
+    },
+    {
+      "id": "STORE019",
+      "name": "Life Pharmacy",
+      "tagline": "Enhancing Life Quality",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyNSIgZmlsbD0iI0ZGNjM0NyIvPjxwYXRoIGQ9Ik0yNSAxOFY0Mkg1NVYxOEgyNVoiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTE4IDI1SDQyVjM1SDE4VjI1WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=",
+      "address": {
+        "street": "Near Allied Hospital",
+        "area": "Madina Town",
+        "city": "Faisalabad",
+        "phone": "041-8543210",
+        "mobile": "0312-6789012"
+      },
+      "license": "DL-PB-99012",
+      "ntn": "9901234-6"
+    },
+    {
+      "id": "STORE020",
+      "name": "Family Pharmacy",
+      "tagline": "Caring for Families",
+      "logo": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB4PSI4IiB5PSI4IiB3aWR0aD0iNDQiIGhlaWdodD0iNDQiIHJ4PSIyMiIgZmlsbD0iIzg3Q0VFQiIvPjxwYXRoIGQ9Ik0yNiAyMFY0MEgzNFYyMEgyNloiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTIwIDI2SDQwVjM0SDIwVjI2WiIgZmlsbD0id2hpdGUiLz48L3N2Zz4=",
+      "address": {
+        "street": "House #234, Street 5",
+        "area": "PWD Housing Society",
+        "city": "Islamabad",
+        "phone": "051-5432109",
+        "mobile": "0300-8901234"
+      },
+      "license": "DL-ICT-00123",
+      "ntn": "0012345-7"
+    }
+  ]
+}

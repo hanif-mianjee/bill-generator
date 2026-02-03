@@ -1,0 +1,364 @@
+/* Template Styles - Using CSS Custom Properties */
+
+/* Template 1: Classic Professional (Blue formal) */
+.bill-preview[data-template="classic-professional"] {
+  --bill-bg: #ffffff;
+  --bill-text: #1e293b;
+  --bill-primary: #1e40af;
+  --bill-secondary: #64748b;
+  --bill-border: #cbd5e1;
+  --bill-header-bg: #1e40af;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #e0e7ff;
+  --bill-table-header-text: #1e40af;
+  --bill-table-stripe: #f8fafc;
+  --bill-accent: #1e40af;
+}
+
+/* Template 2: Modern Minimal (Clean grayscale) */
+.bill-preview[data-template="modern-minimal"] {
+  --bill-bg: #ffffff;
+  --bill-text: #171717;
+  --bill-primary: #171717;
+  --bill-secondary: #737373;
+  --bill-border: #e5e5e5;
+  --bill-header-bg: #fafafa;
+  --bill-header-text: #171717;
+  --bill-table-header-bg: #fafafa;
+  --bill-table-header-text: #171717;
+  --bill-table-stripe: #fafafa;
+  --bill-accent: #171717;
+}
+
+.bill-preview[data-template="modern-minimal"] .bill-header {
+  border-bottom: 1px solid var(--bill-border);
+}
+
+.bill-preview[data-template="modern-minimal"] .bill-info h3 {
+  font-weight: 400;
+  letter-spacing: 3px;
+}
+
+/* Template 3: Pharmacy Green (Health green theme) */
+.bill-preview[data-template="pharmacy-green"] {
+  --bill-bg: #ffffff;
+  --bill-text: #1a1a1a;
+  --bill-primary: #15803d;
+  --bill-secondary: #6b7280;
+  --bill-border: #d1fae5;
+  --bill-header-bg: #15803d;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #dcfce7;
+  --bill-table-header-text: #15803d;
+  --bill-table-stripe: #f0fdf4;
+  --bill-accent: #15803d;
+}
+
+/* Template 4: Corporate Blue (Business formal) */
+.bill-preview[data-template="corporate-blue"] {
+  --bill-bg: #ffffff;
+  --bill-text: #1e293b;
+  --bill-primary: #0369a1;
+  --bill-secondary: #64748b;
+  --bill-border: #bae6fd;
+  --bill-header-bg: #0c4a6e;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #e0f2fe;
+  --bill-table-header-text: #0369a1;
+  --bill-table-stripe: #f0f9ff;
+  --bill-accent: #0369a1;
+}
+
+/* Template 5: Warm Healthcare (Orange/coral tones) */
+.bill-preview[data-template="warm-healthcare"] {
+  --bill-bg: #fffbf5;
+  --bill-text: #292524;
+  --bill-primary: #ea580c;
+  --bill-secondary: #78716c;
+  --bill-border: #fed7aa;
+  --bill-header-bg: #ea580c;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #ffedd5;
+  --bill-table-header-text: #c2410c;
+  --bill-table-stripe: #fff7ed;
+  --bill-accent: #ea580c;
+}
+
+/* Template 6: Medical Trust (Teal medical) */
+.bill-preview[data-template="medical-trust"] {
+  --bill-bg: #ffffff;
+  --bill-text: #134e4a;
+  --bill-primary: #0d9488;
+  --bill-secondary: #5eead4;
+  --bill-border: #99f6e4;
+  --bill-header-bg: #0f766e;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #ccfbf1;
+  --bill-table-header-text: #0f766e;
+  --bill-table-stripe: #f0fdfa;
+  --bill-accent: #0d9488;
+}
+
+/* Template 7: Simple Receipt (Thermal print style) */
+.bill-preview[data-template="simple-receipt"] {
+  --bill-bg: #fefefe;
+  --bill-text: #000000;
+  --bill-primary: #000000;
+  --bill-secondary: #666666;
+  --bill-border: #cccccc;
+  --bill-header-bg: #ffffff;
+  --bill-header-text: #000000;
+  --bill-table-header-bg: #f0f0f0;
+  --bill-table-header-text: #000000;
+  --bill-table-stripe: #f8f8f8;
+  --bill-accent: #000000;
+  --bill-font: 'Courier New', monospace;
+}
+
+.bill-preview[data-template="simple-receipt"] .bill-header {
+  border-bottom: 2px dashed var(--bill-border);
+}
+
+.bill-preview[data-template="simple-receipt"] .bill-footer {
+  border-top: 2px dashed var(--bill-border);
+}
+
+/* Template 8: Premium Gold (Gold accents) */
+.bill-preview[data-template="premium-gold"] {
+  --bill-bg: #fffef7;
+  --bill-text: #1c1917;
+  --bill-primary: #b45309;
+  --bill-secondary: #92400e;
+  --bill-border: #fcd34d;
+  --bill-header-bg: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #fef3c7;
+  --bill-table-header-text: #92400e;
+  --bill-table-stripe: #fffbeb;
+  --bill-accent: #b45309;
+}
+
+.bill-preview[data-template="premium-gold"] .store-details h2 {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Template 9: Digital Modern (Gradient blue) */
+.bill-preview[data-template="digital-modern"] {
+  --bill-bg: #ffffff;
+  --bill-text: #1e293b;
+  --bill-primary: #6366f1;
+  --bill-secondary: #94a3b8;
+  --bill-border: #c7d2fe;
+  --bill-header-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #eef2ff;
+  --bill-table-header-text: #4f46e5;
+  --bill-table-stripe: #f5f3ff;
+  --bill-accent: #6366f1;
+}
+
+/* Template 10: Traditional (Green/white) */
+.bill-preview[data-template="traditional"] {
+  --bill-bg: #ffffff;
+  --bill-text: #1a1a1a;
+  --bill-primary: #166534;
+  --bill-secondary: #4d7c0f;
+  --bill-border: #86efac;
+  --bill-header-bg: #166534;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #bbf7d0;
+  --bill-table-header-text: #166534;
+  --bill-table-stripe: #dcfce7;
+  --bill-accent: #166534;
+}
+
+/* Template 11: Fresh Mint (Mint green) */
+.bill-preview[data-template="fresh-mint"] {
+  --bill-bg: #f0fdf4;
+  --bill-text: #1e3a2f;
+  --bill-primary: #10b981;
+  --bill-secondary: #6ee7b7;
+  --bill-border: #a7f3d0;
+  --bill-header-bg: #059669;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #d1fae5;
+  --bill-table-header-text: #047857;
+  --bill-table-stripe: #ecfdf5;
+  --bill-accent: #10b981;
+}
+
+/* Template 12: Bold Statement (High contrast B/W) */
+.bill-preview[data-template="bold-statement"] {
+  --bill-bg: #ffffff;
+  --bill-text: #000000;
+  --bill-primary: #000000;
+  --bill-secondary: #525252;
+  --bill-border: #000000;
+  --bill-header-bg: #000000;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #000000;
+  --bill-table-header-text: #ffffff;
+  --bill-table-stripe: #f5f5f5;
+  --bill-accent: #000000;
+}
+
+.bill-preview[data-template="bold-statement"] .bill-header {
+  border-bottom: 4px solid #000000;
+}
+
+/* Template 13: Soft Pastel (Pink/lavender) */
+.bill-preview[data-template="soft-pastel"] {
+  --bill-bg: #fdf4ff;
+  --bill-text: #581c87;
+  --bill-primary: #a855f7;
+  --bill-secondary: #c084fc;
+  --bill-border: #e9d5ff;
+  --bill-header-bg: #a855f7;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #f3e8ff;
+  --bill-table-header-text: #7e22ce;
+  --bill-table-stripe: #faf5ff;
+  --bill-accent: #a855f7;
+}
+
+/* Template 14: Night Mode (Dark theme) */
+.bill-preview[data-template="night-mode"] {
+  --bill-bg: #1e1e1e;
+  --bill-text: #e5e5e5;
+  --bill-primary: #60a5fa;
+  --bill-secondary: #9ca3af;
+  --bill-border: #404040;
+  --bill-header-bg: #2d2d2d;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #2d2d2d;
+  --bill-table-header-text: #60a5fa;
+  --bill-table-stripe: #262626;
+  --bill-accent: #60a5fa;
+}
+
+/* Template 15: Eco Friendly (Nature green/brown) */
+.bill-preview[data-template="eco-friendly"] {
+  --bill-bg: #fefce8;
+  --bill-text: #422006;
+  --bill-primary: #65a30d;
+  --bill-secondary: #854d0e;
+  --bill-border: #bef264;
+  --bill-header-bg: #65a30d;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #ecfccb;
+  --bill-table-header-text: #3f6212;
+  --bill-table-stripe: #f7fee7;
+  --bill-accent: #65a30d;
+}
+
+/* Template 16: Tech Pharma (Purple tech) */
+.bill-preview[data-template="tech-pharma"] {
+  --bill-bg: #faf5ff;
+  --bill-text: #1e1b4b;
+  --bill-primary: #7c3aed;
+  --bill-secondary: #a78bfa;
+  --bill-border: #c4b5fd;
+  --bill-header-bg: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #ede9fe;
+  --bill-table-header-text: #5b21b6;
+  --bill-table-stripe: #f5f3ff;
+  --bill-accent: #7c3aed;
+}
+
+/* Template 17: Retro Classic (Vintage sepia) */
+.bill-preview[data-template="retro-classic"] {
+  --bill-bg: #fefcf3;
+  --bill-text: #44403c;
+  --bill-primary: #78716c;
+  --bill-secondary: #a8a29e;
+  --bill-border: #d6d3d1;
+  --bill-header-bg: #57534e;
+  --bill-header-text: #fafaf9;
+  --bill-table-header-bg: #e7e5e4;
+  --bill-table-header-text: #44403c;
+  --bill-table-stripe: #f5f5f4;
+  --bill-accent: #78716c;
+  --bill-font: Georgia, 'Times New Roman', serif;
+}
+
+.bill-preview[data-template="retro-classic"] .bill-info h3 {
+  font-family: Georgia, serif;
+  font-style: italic;
+}
+
+/* Template 18: Clean Clinical (Hospital white/blue) */
+.bill-preview[data-template="clean-clinical"] {
+  --bill-bg: #ffffff;
+  --bill-text: #0f172a;
+  --bill-primary: #0284c7;
+  --bill-secondary: #64748b;
+  --bill-border: #e2e8f0;
+  --bill-header-bg: #f8fafc;
+  --bill-header-text: #0284c7;
+  --bill-table-header-bg: #f1f5f9;
+  --bill-table-header-text: #0369a1;
+  --bill-table-stripe: #f8fafc;
+  --bill-accent: #0284c7;
+}
+
+.bill-preview[data-template="clean-clinical"] .bill-header {
+  border-bottom: 3px solid #0284c7;
+}
+
+/* Template 19: Gradient Flow (Color gradient) */
+.bill-preview[data-template="gradient-flow"] {
+  --bill-bg: linear-gradient(180deg, #fdf4ff 0%, #f0f9ff 50%, #ecfdf5 100%);
+  --bill-text: #1e293b;
+  --bill-primary: #7c3aed;
+  --bill-secondary: #64748b;
+  --bill-border: #e0e7ff;
+  --bill-header-bg: linear-gradient(135deg, #7c3aed 0%, #0ea5e9 50%, #10b981 100%);
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #f5f3ff;
+  --bill-table-header-text: #5b21b6;
+  --bill-table-stripe: #f0f9ff;
+  --bill-accent: #7c3aed;
+}
+
+.bill-preview[data-template="gradient-flow"] {
+  background: linear-gradient(180deg, #fdf4ff 0%, #f0f9ff 50%, #ecfdf5 100%);
+}
+
+/* Template 20: Split Design (Two-tone split) */
+.bill-preview[data-template="split-design"] {
+  --bill-bg: #ffffff;
+  --bill-text: #1e293b;
+  --bill-primary: #dc2626;
+  --bill-secondary: #64748b;
+  --bill-border: #fecaca;
+  --bill-header-bg: #dc2626;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #1e293b;
+  --bill-table-header-text: #ffffff;
+  --bill-table-stripe: #f1f5f9;
+  --bill-accent: #dc2626;
+}
+
+.bill-preview[data-template="split-design"] .bill-header {
+  background-color: #fee2e2;
+  margin: -15mm -15mm 8mm -15mm;
+  padding: 15mm;
+  border-bottom: none;
+}
+
+.bill-preview[data-template="split-design"] .customer-section {
+  background-color: #1e293b;
+  color: #ffffff;
+}
+
+.bill-preview[data-template="split-design"] .customer-section .label {
+  color: #94a3b8;
+}
+
+.bill-preview[data-template="split-design"] .customer-section .customer-name {
+  color: #ffffff;
+}

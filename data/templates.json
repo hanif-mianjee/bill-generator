@@ -1,0 +1,104 @@
+{
+  "templates": [
+    {
+      "id": "classic-professional",
+      "name": "Classic Professional",
+      "description": "Blue formal design with traditional layout"
+    },
+    {
+      "id": "modern-minimal",
+      "name": "Modern Minimal",
+      "description": "Clean grayscale with minimalist aesthetics"
+    },
+    {
+      "id": "pharmacy-green",
+      "name": "Pharmacy Green",
+      "description": "Health-focused green theme"
+    },
+    {
+      "id": "corporate-blue",
+      "name": "Corporate Blue",
+      "description": "Business formal appearance"
+    },
+    {
+      "id": "warm-healthcare",
+      "name": "Warm Healthcare",
+      "description": "Orange and coral tones"
+    },
+    {
+      "id": "medical-trust",
+      "name": "Medical Trust",
+      "description": "Teal medical professional"
+    },
+    {
+      "id": "simple-receipt",
+      "name": "Simple Receipt",
+      "description": "Thermal print style"
+    },
+    {
+      "id": "premium-gold",
+      "name": "Premium Gold",
+      "description": "Luxury gold accents"
+    },
+    {
+      "id": "digital-modern",
+      "name": "Digital Modern",
+      "description": "Gradient blue tech look"
+    },
+    {
+      "id": "traditional",
+      "name": "Traditional",
+      "description": "Classic green and white"
+    },
+    {
+      "id": "fresh-mint",
+      "name": "Fresh Mint",
+      "description": "Light mint green theme"
+    },
+    {
+      "id": "bold-statement",
+      "name": "Bold Statement",
+      "description": "High contrast black and white"
+    },
+    {
+      "id": "soft-pastel",
+      "name": "Soft Pastel",
+      "description": "Pink and lavender tones"
+    },
+    {
+      "id": "night-mode",
+      "name": "Night Mode",
+      "description": "Dark theme design"
+    },
+    {
+      "id": "eco-friendly",
+      "name": "Eco Friendly",
+      "description": "Nature green and brown"
+    },
+    {
+      "id": "tech-pharma",
+      "name": "Tech Pharma",
+      "description": "Purple tech aesthetic"
+    },
+    {
+      "id": "retro-classic",
+      "name": "Retro Classic",
+      "description": "Vintage sepia tones"
+    },
+    {
+      "id": "clean-clinical",
+      "name": "Clean Clinical",
+      "description": "Hospital white and blue"
+    },
+    {
+      "id": "gradient-flow",
+      "name": "Gradient Flow",
+      "description": "Flowing color gradient"
+    },
+    {
+      "id": "split-design",
+      "name": "Split Design",
+      "description": "Two-tone split layout"
+    }
+  ]
+}

@@ -1,0 +1,285 @@
+/* Preview Section Styles */
+.preview-section {
+  background-color: var(--color-white);
+  padding: var(--spacing-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+/* Preview Container */
+.preview-container {
+  background-color: var(--color-gray-100);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+  overflow: auto;
+  max-height: 80vh;
+}
+
+/* Bill Preview Base Styles */
+.bill-preview {
+  /* Base Template Variables - overridden by each template */
+  --bill-bg: #ffffff;
+  --bill-text: #333333;
+  --bill-primary: #2563eb;
+  --bill-secondary: #64748b;
+  --bill-border: #e2e8f0;
+  --bill-header-bg: #2563eb;
+  --bill-header-text: #ffffff;
+  --bill-table-header-bg: #f1f5f9;
+  --bill-table-header-text: #334155;
+  --bill-table-stripe: #f8fafc;
+  --bill-accent: #2563eb;
+  --bill-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  background-color: var(--bill-bg);
+  color: var(--bill-text);
+  font-family: var(--bill-font);
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm;
+  margin: 0 auto;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Placeholder */
+.bill-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--color-gray-400);
+  font-size: var(--font-size-lg);
+}
+
+/* Bill Header */
+.bill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 10mm;
+  margin-bottom: 8mm;
+  border-bottom: 2px solid var(--bill-border);
+}
+
+.store-info {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.store-logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.store-details h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--bill-primary);
+  margin-bottom: 2px;
+}
+
+.store-details .tagline {
+  font-size: 11px;
+  color: var(--bill-secondary);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.store-details .address {
+  font-size: 11px;
+  color: var(--bill-text);
+  line-height: 1.5;
+}
+
+.store-details .license-info {
+  font-size: 10px;
+  color: var(--bill-secondary);
+  margin-top: 5px;
+}
+
+/* Bill Info (right side) */
+.bill-info {
+  text-align: right;
+}
+
+.bill-info h3 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--bill-primary);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.bill-info .bill-number {
+  font-size: 12px;
+  color: var(--bill-text);
+  margin-bottom: 3px;
+}
+
+.bill-info .bill-date {
+  font-size: 12px;
+  color: var(--bill-secondary);
+}
+
+/* Customer Section */
+.customer-section {
+  background-color: var(--bill-table-header-bg);
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 8mm;
+}
+
+.customer-section .label {
+  font-size: 10px;
+  color: var(--bill-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.customer-section .customer-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--bill-text);
+}
+
+/* Medicines Table */
+.medicines-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 8mm;
+  font-size: 12px;
+}
+
+.medicines-table thead {
+  background-color: var(--bill-table-header-bg);
+}
+
+.medicines-table th {
+  padding: 10px 8px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--bill-table-header-text);
+  border-bottom: 2px solid var(--bill-border);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.medicines-table th:last-child,
+.medicines-table td:last-child {
+  text-align: right;
+}
+
+.medicines-table th:nth-child(4),
+.medicines-table th:nth-child(5),
+.medicines-table td:nth-child(4),
+.medicines-table td:nth-child(5) {
+  text-align: center;
+}
+
+.medicines-table tbody tr {
+  border-bottom: 1px solid var(--bill-border);
+}
+
+.medicines-table tbody tr:nth-child(even) {
+  background-color: var(--bill-table-stripe);
+}
+
+.medicines-table td {
+  padding: 10px 8px;
+  vertical-align: top;
+}
+
+.medicines-table .medicine-name {
+  font-weight: 500;
+  color: var(--bill-text);
+}
+
+.medicines-table .medicine-generic {
+  font-size: 10px;
+  color: var(--bill-secondary);
+  font-style: italic;
+}
+
+.medicines-table .medicine-strength {
+  font-size: 10px;
+  color: var(--bill-secondary);
+}
+
+/* Totals Section */
+.totals-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 8mm;
+}
+
+.totals-box {
+  width: 200px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 12px;
+}
+
+.total-row.subtotal {
+  border-bottom: 1px solid var(--bill-border);
+}
+
+.total-row.grand-total {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--bill-primary);
+  border-top: 2px solid var(--bill-border);
+  padding-top: 8px;
+  margin-top: 4px;
+}
+
+/* Footer */
+.bill-footer {
+  margin-top: auto;
+  padding-top: 8mm;
+  border-top: 1px solid var(--bill-border);
+  text-align: center;
+  font-size: 10px;
+  color: var(--bill-secondary);
+}
+
+.bill-footer .thank-you {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bill-primary);
+  margin-bottom: 5px;
+}
+
+.bill-footer .terms {
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+/* Responsive Preview */
+@media (max-width: 768px) {
+  .preview-container {
+    padding: var(--spacing-2);
+  }
+
+  .bill-preview {
+    width: 100%;
+    min-height: auto;
+    padding: 10mm;
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
+}
+
+@media print {
+  .bill-preview {
+    box-shadow: none;
+    margin: 0;
+  }
+}
