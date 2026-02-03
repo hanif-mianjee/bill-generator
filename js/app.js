@@ -103,6 +103,54 @@ class App {
         this.selectRandomStore();
       });
     }
+
+    // Help modal
+    this.setupHelpModal();
+  }
+
+  /**
+   * Set up help modal event listeners
+   */
+  setupHelpModal() {
+    const helpBtn = document.getElementById('helpBtn');
+    const helpModal = document.getElementById('helpModal');
+    const closeHelpBtn = document.getElementById('closeHelpBtn');
+    const closeHelpFooterBtn = document.getElementById('closeHelpFooterBtn');
+
+    if (helpBtn && helpModal) {
+      // Open modal
+      helpBtn.addEventListener('click', () => {
+        helpModal.classList.remove('hidden');
+      });
+
+      // Close modal - close button
+      if (closeHelpBtn) {
+        closeHelpBtn.addEventListener('click', () => {
+          helpModal.classList.add('hidden');
+        });
+      }
+
+      // Close modal - footer button
+      if (closeHelpFooterBtn) {
+        closeHelpFooterBtn.addEventListener('click', () => {
+          helpModal.classList.add('hidden');
+        });
+      }
+
+      // Close modal - click outside
+      helpModal.addEventListener('click', (e) => {
+        if (e.target === helpModal) {
+          helpModal.classList.add('hidden');
+        }
+      });
+
+      // Close modal - Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !helpModal.classList.contains('hidden')) {
+          helpModal.classList.add('hidden');
+        }
+      });
+    }
   }
 
   /**

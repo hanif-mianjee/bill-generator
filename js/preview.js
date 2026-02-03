@@ -252,7 +252,7 @@ class BillPreview {
             Terms & Conditions: All medicines are non-returnable.
             Please check expiry date before use. Keep medicines out of reach of children.
             <br>
-            This is a computer-generated invoice.
+            This is a computer-generated invoice. For demonstration purposes only.
           </p>
         </div>
       </div>

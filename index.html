@@ -53,6 +53,14 @@
             </svg>
             <span>20+ Templates</span>
           </div>
+          <button id="helpBtn" class="help-btn" title="How to use this app">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <span>Help</span>
+          </button>
         </div>
       </div>
     </header>
@@ -255,6 +263,92 @@
   <div id="loadingOverlay" class="loading-overlay hidden">
     <div class="loading-spinner"></div>
     <p class="loading-text">Generating PDF...</p>
+  </div>
+
+  <!-- Help Modal -->
+  <div id="helpModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>How to Use Medical Bill Generator</h2>
+        <button id="closeHelpBtn" class="modal-close" title="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <section class="help-section">
+          <h3>🚀 Quick Start</h3>
+          <ol>
+            <li>Enter <strong>Customer Name</strong> and <strong>Bill Date</strong></li>
+            <li>Enter <strong>Total Amount</strong> (PKR 100 - 500,000)</li>
+            <li>Click <strong>"Download PDF"</strong> to save your bill</li>
+          </ol>
+        </section>
+
+        <section class="help-section">
+          <h3>📄 Single Bill</h3>
+          <p>Enter one amount to generate a single bill:</p>
+          <div class="help-example">5000</div>
+        </section>
+
+        <section class="help-section">
+          <h3>📚 Multiple Bills (in One PDF)</h3>
+          <p>Enter multiple amounts (one per line) to generate multiple bills in a single PDF:</p>
+          <div class="help-example">5000<br>7500<br>3200<br>12000</div>
+          <p><strong>Each bill automatically gets:</strong></p>
+          <ul>
+            <li>Different medicines (unique selection per bill)</li>
+            <li>Different dates based on selected strategy</li>
+            <li>Unique bill number</li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3>📅 Date Strategies (Multiple Bills)</h3>
+          <ul>
+            <li><strong>Same date:</strong> All bills use the same date</li>
+            <li><strong>Sequential:</strong> Bills spread 10-15 days apart (going backwards)</li>
+            <li><strong>Random:</strong> Random dates within last 30 days</li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3>🎨 Templates & Paper Sizes</h3>
+          <ul>
+            <li>Click <strong class="shuffle-btn-text">Shuffle</strong> buttons to randomize store or template</li>
+            <li><strong>Thermal Mode (80mm):</strong> Optimized for receipt printers</li>
+            <li>Choose from 21 professional templates</li>
+            <li>Select from 6 paper sizes (Thermal, A4, A5, Letter, Legal, Half-Letter)</li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3>🔄 Regenerate Items</h3>
+          <p>Click <strong>"Regenerate Items"</strong> to get a different medicine selection while keeping the same total amount.</p>
+        </section>
+
+        <section class="help-section">
+          <h3>💡 Tips</h3>
+          <ul>
+            <li>Bill totals will always be ≥ entered amount (within 5% tolerance)</li>
+            <li>Medicines are automatically selected to match your target amount</li>
+            <li>Live preview updates as you type</li>
+            <li>Thermal mode automatically switches to thermal template</li>
+          </ul>
+        </section>
+
+        <section class="help-section">
+          <h3>🖨️ Printing/PDF</h3>
+          <p>When you click "Download PDF", a print dialog will open:</p>
+          <ul>
+            <li>Select <strong>"Save as PDF"</strong> in the print dialog</li>
+            <li>Page size automatically matches your selected paper size</li>
+            <li>For thermal receipts, page size is 80mm width with auto height (no dead space)</li>
+            <li>Multiple bills will be on separate pages in a single PDF</li>
+          </ul>
+        </section>
+      </div>
+      <div class="modal-footer">
+        <button id="closeHelpFooterBtn" class="btn btn-primary">Got it!</button>
+      </div>
+    </div>
   </div>
 
   <!-- Scripts -->

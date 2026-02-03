@@ -28,6 +28,8 @@ A professional, production-ready medical bill generator application that works e
 6. Select paper size (thermal 80mm is default)
 7. Click "Download PDF" to save your bill(s)
 
+**💡 Tip:** Click the **Help** button (?) in the header for built-in guidance on all features
+
 ## How to Use
 
 ### Single Bill
