@@ -299,6 +299,7 @@ class App {
 
   /**
    * Download PDF - handles single or multiple bills
+   * Uses browser's native print functionality for reliable PDF generation
    */
   async downloadPDF() {
     const formData = this.formHandler.getFormData();
@@ -315,98 +316,27 @@ class App {
       return;
     }
 
-    // Single bill
-    if (amounts.length === 1) {
-      if (this.selectedMedicines.length === 0) {
-        alert('No medicines selected. Please enter a valid amount.');
-        return;
-      }
+    // Get the preview element
+    const previewElement = this.preview.getElement();
+    
+    // Check if we have actual bill content (not just the placeholder)
+    const hasPlaceholder = previewElement.querySelector('.bill-placeholder');
+    const hasBillContent = previewElement.querySelector('.bill-header') || 
+                          previewElement.querySelector('.medicines-table') ||
+                          previewElement.querySelectorAll('.bill-preview-item').length > 0;
 
-      await this.pdfGenerator.generate(this.preview.getElement(), {
-        customerName: formData.customerName,
-        billNumber: this.preview.getBillNumber(),
-        paperSize: formData.paperSizeId || 'thermal'
-      });
+    if (hasPlaceholder && !hasBillContent) {
+      alert('No bills to download. Please enter valid amounts.');
       return;
     }
 
-    // Multiple bills - generate each bill and combine into one PDF
-    await this.generateMultipleBills(formData, amounts);
-  }
-
-  /**
-   * Generate multiple bills in a single PDF
-   */
-  async generateMultipleBills(formData, amounts) {
-    const baseDate = new Date(formData.billDate);
-    const paperSize = formData.paperSizeId || 'thermal';
-    const dateStrategy = formData.dateStrategy || 'sequential';
-
-    // Get paper config for sizing
-    const paperConfigs = {
-      'thermal': { width: '80mm', height: '200mm', padding: '3mm', fontSize: '9px' },
-      'a4': { width: '210mm', height: '297mm', padding: '10mm', fontSize: '11px' },
-      'a5': { width: '148mm', height: '210mm', padding: '8mm', fontSize: '10px' },
-      'letter': { width: '215.9mm', height: '279.4mm', padding: '10mm', fontSize: '11px' },
-      'legal': { width: '215.9mm', height: '355.6mm', padding: '10mm', fontSize: '11px' },
-      'half-letter': { width: '139.7mm', height: '215.9mm', padding: '8mm', fontSize: '10px' }
-    };
-    const config = paperConfigs[paperSize] || paperConfigs['a4'];
-
-    try {
-      this.pdfGenerator.showLoading(`Generating ${amounts.length} bills...`);
-
-      // Create container for all bills
-      const container = document.createElement('div');
-      container.style.position = 'absolute';
-      container.style.left = '-9999px';
-      container.style.top = '0';
-      document.body.appendChild(container);
-
-      // Generate each bill
-      for (let i = 0; i < amounts.length; i++) {
-        const amount = amounts[i];
-
-        // Generate different medicines for each bill
-        const medicines = this.medicineSelector.selectMedicines(amount);
-
-        // Generate different date for each bill based on strategy
-        const billDate = this.generateBillDate(baseDate, i, dateStrategy);
-
-        // Generate unique bill number
-        const billNumber = this.generateBillNumber();
-
-        // Create bill HTML
-        const billHtml = this.createBillHtml({
-          customerName: formData.customerName,
-          billDate: billDate,
-          billNumber: billNumber,
-          selectedMedicines: medicines,
-          store: this.currentStore,
-          totalAmount: amount,
-          templateId: formData.templateId,
-          config: config,
-          isLastBill: i === amounts.length - 1
-        });
-
-        container.innerHTML += billHtml;
-      }
-
-      // Generate PDF from container
-      await this.pdfGenerator.generateFromContainer(container, {
-        customerName: formData.customerName,
-        billCount: amounts.length,
-        paperSize: paperSize
-      });
-
-      // Clean up
-      document.body.removeChild(container);
-
-    } catch (error) {
-      console.error('Error generating multiple bills:', error);
-      this.pdfGenerator.hideLoading();
-      alert('Error generating PDF. Please try again.');
-    }
+    // Use the print-based PDF generator
+    await this.pdfGenerator.generate(previewElement, {
+      customerName: formData.customerName,
+      billNumber: this.preview.getBillNumber(),
+      billCount: amounts.length,
+      paperSize: formData.paperSizeId || 'thermal'
+    });
   }
 
   /**
@@ -419,129 +349,6 @@ class App {
     const day = String(date.getDate()).padStart(2, '0');
     const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
     return `INV-${year}${month}${day}-${random}`;
-  }
-
-  /**
-   * Create bill HTML string
-   */
-  createBillHtml(data) {
-    const { customerName, billDate, billNumber, selectedMedicines, store, totalAmount, templateId, config, isLastBill } = data;
-
-    const actualTotal = selectedMedicines.reduce((sum, item) => sum + item.total, 0);
-
-    const formattedDate = new Date(billDate).toLocaleDateString('en-PK', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-
-    const formatCurrency = (amount) => {
-      return new Intl.NumberFormat('en-PK', {
-        style: 'currency',
-        currency: 'PKR',
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      }).format(amount).replace('PKR', 'Rs.');
-    };
-
-    const medicineRows = selectedMedicines.map((medicine, index) => `
-      <tr>
-        <td>${index + 1}</td>
-        <td>
-          <span class="medicine-name">${medicine.name}</span>
-          <br>
-          <span class="medicine-generic">${medicine.genericName}</span>
-          <span class="medicine-strength">(${medicine.strength})</span>
-        </td>
-        <td>${medicine.packSize}</td>
-        <td>${medicine.quantity}</td>
-        <td>${formatCurrency(medicine.price)}</td>
-        <td>${formatCurrency(medicine.total)}</td>
-      </tr>
-    `).join('');
-
-    return `
-      <div class="bill-preview bill-page" data-template="${templateId}" style="
-        width: ${config.width};
-        min-height: auto;
-        max-height: ${config.height};
-        padding: ${config.padding};
-        font-size: ${config.fontSize};
-        box-sizing: border-box;
-        overflow: hidden;
-        background: white;
-        page-break-after: ${isLastBill ? 'auto' : 'always'};
-        margin: 0;
-      ">
-        <div class="bill-header">
-          <div class="store-info">
-            <img src="${store.logo}" alt="${store.name}" class="store-logo" onerror="this.style.display='none'">
-            <div class="store-details">
-              <h2>${store.name}</h2>
-              <p class="tagline">${store.tagline}</p>
-              <div class="address">
-                <p>${store.address.street}</p>
-                <p>${store.address.area}, ${store.address.city}</p>
-              </div>
-              <p class="license-info">License: ${store.license} | NTN: ${store.ntn}</p>
-            </div>
-          </div>
-          <div class="bill-info">
-            <h3>Invoice</h3>
-            <p class="bill-number"><strong>Bill #:</strong> ${billNumber}</p>
-            <p class="bill-date"><strong>Date:</strong> ${formattedDate}</p>
-          </div>
-        </div>
-
-        <div class="customer-section">
-          <p class="label">Bill To</p>
-          <p class="customer-name">${customerName}</p>
-        </div>
-
-        <table class="medicines-table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Medicine</th>
-              <th>Pack Size</th>
-              <th>Qty</th>
-              <th>Price</th>
-              <th>Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${medicineRows}
-          </tbody>
-        </table>
-
-        <div class="totals-section">
-          <div class="totals-box">
-            <div class="total-row subtotal">
-              <span>Subtotal:</span>
-              <span>${formatCurrency(actualTotal)}</span>
-            </div>
-            <div class="total-row">
-              <span>Discount:</span>
-              <span>${formatCurrency(0)}</span>
-            </div>
-            <div class="total-row grand-total">
-              <span>Grand Total:</span>
-              <span>${formatCurrency(actualTotal)}</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="bill-footer">
-          <p class="thank-you">Thank you for your purchase!</p>
-          <p class="terms">
-            Terms & Conditions: All medicines are non-returnable.
-            Please check expiry date before use.
-            <br>
-            This is a computer-generated invoice.
-          </p>
-        </div>
-      </div>
-    `;
   }
 }
 

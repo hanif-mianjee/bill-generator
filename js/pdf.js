@@ -1,210 +1,187 @@
 /**
  * PDF Generator
- * Handles PDF generation using html2pdf.js with multiple paper size support
- * Supports single bill and multiple bills in one PDF
+ * Uses browser's native print functionality for reliable PDF generation
+ * Simply uses the existing preview exactly as it appears
  */
 
 class PDFGenerator {
   constructor() {
     this.loadingOverlay = document.getElementById('loadingOverlay');
-
-    // Paper size configurations optimized for single-page bills
-    this.paperConfigs = {
-      'a4': { format: 'a4', width: 210, height: 297, unit: 'mm', scale: 2 },
-      'a5': { format: 'a5', width: 148, height: 210, unit: 'mm', scale: 2 },
-      'letter': { format: 'letter', width: 215.9, height: 279.4, unit: 'mm', scale: 2 },
-      'legal': { format: 'legal', width: 215.9, height: 355.6, unit: 'mm', scale: 2 },
-      'half-letter': { format: [139.7, 215.9], width: 139.7, height: 215.9, unit: 'mm', scale: 2 },
-      'thermal': { format: [80, 200], width: 80, height: 200, unit: 'mm', scale: 2 }
-    };
   }
 
   /**
    * Show loading overlay
    */
-  showLoading(message = 'Generating PDF...') {
-    const loadingText = this.loadingOverlay.querySelector('.loading-text');
-    if (loadingText) loadingText.textContent = message;
-    this.loadingOverlay.classList.remove('hidden');
+  showLoading(message = 'Preparing PDF...') {
+    if (this.loadingOverlay) {
+      const loadingText = this.loadingOverlay.querySelector('.loading-text');
+      if (loadingText) loadingText.textContent = message;
+      this.loadingOverlay.classList.remove('hidden');
+    }
   }
 
   /**
    * Hide loading overlay
    */
   hideLoading() {
-    this.loadingOverlay.classList.add('hidden');
+    if (this.loadingOverlay) {
+      this.loadingOverlay.classList.add('hidden');
+    }
   }
 
   /**
-   * Generate and download single bill PDF
+   * Generate PDF by opening print dialog
+   * Uses the preview exactly as it appears
+   * 
+   * @param {HTMLElement} previewElement - The bill preview element
+   * @param {Object} options - Generation options
    */
-  async generate(element, options = {}) {
-    const {
-      customerName = 'Customer',
-      billNumber = 'INV-000000',
-      paperSize = 'a4'
-    } = options;
+  async generate(previewElement, options = {}) {
+    const { customerName = 'Customer' } = options;
 
-    // Create safe filename
-    const safeName = customerName.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
-    const pdfFilename = `${safeName}_${billNumber}.pdf`;
-
-    // Get paper configuration
-    const paperConfig = this.paperConfigs[paperSize] || this.paperConfigs['a4'];
-
-    // Clone the element to avoid modifying the original
-    const clonedElement = element.cloneNode(true);
-    
-    // Create a temporary container with proper styling
-    const tempContainer = document.createElement('div');
-    tempContainer.style.cssText = `
-      position: fixed;
-      left: 0;
-      top: 0;
-      width: ${paperConfig.width}mm;
-      background: white;
-      z-index: 999999;
-      opacity: 0;
-      pointer-events: none;
-    `;
-    
-    // Ensure cloned element has proper display
-    clonedElement.style.cssText = `
-      width: 100%;
-      background: white;
-      display: block;
-      visibility: visible;
-    `;
-    
-    tempContainer.appendChild(clonedElement);
-    document.body.appendChild(tempContainer);
-
-    // PDF options optimized for single page
-    const pdfOptions = {
-      margin: [2, 2, 2, 2],
-      filename: pdfFilename,
-      image: {
-        type: 'jpeg',
-        quality: 0.98
-      },
-      html2canvas: {
-        scale: paperConfig.scale,
-        useCORS: true,
-        letterRendering: true,
-        logging: false,
-        backgroundColor: '#ffffff',
-        windowWidth: tempContainer.offsetWidth,
-        windowHeight: tempContainer.offsetHeight,
-        scrollX: 0,
-        scrollY: 0
-      },
-      jsPDF: {
-        unit: 'mm',
-        format: paperConfig.format,
-        orientation: 'portrait',
-        compress: true
-      },
-      pagebreak: { mode: 'avoid-all' }
-    };
+    this.showLoading('Preparing print preview...');
 
     try {
-      this.showLoading();
+      // Create a new window for printing
+      const printWindow = window.open('', '_blank', 'width=900,height=700');
+      
+      if (!printWindow) {
+        alert('Please allow pop-ups to download PDF');
+        this.hideLoading();
+        return false;
+      }
 
-      // Wait for any async rendering to complete
-      await new Promise(resolve => setTimeout(resolve, 200));
+      // Get all stylesheets from the main document
+      const stylesheets = this.getStylesheetLinks();
+      
+      // Clone the preview content
+      const content = previewElement.cloneNode(true);
+      
+      // Remove any label overlays for printing
+      content.querySelectorAll('.bill-label').forEach(label => label.remove());
+      content.querySelectorAll('.bill-placeholder').forEach(el => el.remove());
 
-      // Generate PDF from cloned element
-      await html2pdf()
-        .set(pdfOptions)
-        .from(clonedElement)
-        .save();
+      // Build the print document - use exact same stylesheets
+      const printDocument = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Bill - ${customerName}</title>
+  ${stylesheets}
+  <style>
+    /* Minimal print overrides - keep everything else the same */
+    @media print {
+      @page {
+        margin: 0;
+      }
+    }
+    
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+    }
+    
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+    }
+    
+    /* Remove shadows for print */
+    .bill-preview,
+    .bill-preview-item {
+      box-shadow: none !important;
+      margin: 0 !important;
+    }
+    
+    /* Page breaks for multiple bills */
+    .bill-preview-item {
+      page-break-after: always;
+      page-break-inside: avoid;
+    }
+    
+    .bill-preview-item:last-child {
+      page-break-after: auto;
+    }
+    
+    /* Hide labels */
+    .bill-label {
+      display: none !important;
+    }
+    
+    /* For multiple bills container, reset the gap */
+    .bill-preview.multiple-bills {
+      gap: 0 !important;
+    }
+  </style>
+</head>
+<body>
+  ${content.outerHTML}
+  <script>
+    window.onload = function() {
+      setTimeout(function() {
+        window.print();
+        window.onafterprint = function() {
+          window.close();
+        };
+        setTimeout(function() {
+          window.close();
+        }, 1000);
+      }, 300);
+    };
+  </script>
+</body>
+</html>`;
 
-      // Clean up
-      document.body.removeChild(tempContainer);
+      // Write to the print window
+      printWindow.document.write(printDocument);
+      printWindow.document.close();
 
       this.hideLoading();
       return true;
+
     } catch (error) {
       console.error('Error generating PDF:', error);
-      // Clean up on error
-      if (document.body.contains(tempContainer)) {
-        document.body.removeChild(tempContainer);
-      }
       this.hideLoading();
-      alert('Error generating PDF. Please try again.');
+      alert('Error preparing PDF. Please try again.');
       return false;
     }
   }
 
   /**
-   * Generate PDF from a container with multiple bills
-   * @param {HTMLElement} container - Container with bill HTML
-   * @param {Object} options - PDF generation options
+   * Get stylesheet link tags to include in print window
    */
-  async generateFromContainer(container, options = {}) {
-    const {
-      customerName = 'Customer',
-      billCount = 1,
-      paperSize = 'a4'
-    } = options;
-
-    // Create safe filename
-    const safeName = customerName.replace(/[^a-zA-Z0-9]/g, '_').substring(0, 20);
-    const timestamp = new Date().toISOString().slice(0, 10);
-    const pdfFilename = `${safeName}_${billCount}_bills_${timestamp}.pdf`;
-
-    // Get paper configuration
-    const paperConfig = this.paperConfigs[paperSize] || this.paperConfigs['a4'];
-
-    // PDF options for multiple pages
-    const pdfOptions = {
-      margin: 0,
-      filename: pdfFilename,
-      image: {
-        type: 'jpeg',
-        quality: 0.98
-      },
-      html2canvas: {
-        scale: paperConfig.scale,
-        useCORS: true,
-        letterRendering: true,
-        logging: false
-      },
-      jsPDF: {
-        unit: 'mm',
-        format: paperConfig.format,
-        orientation: 'portrait',
-        compress: true
-      },
-      pagebreak: {
-        mode: ['css', 'legacy'],
-        before: '.bill-page',
-        avoid: ['tr', 'td', '.totals-section']
+  getStylesheetLinks() {
+    let links = '';
+    
+    // Get all linked stylesheets
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+      const href = link.getAttribute('href');
+      if (href) {
+        // Convert relative URLs to absolute
+        const absoluteUrl = new URL(href, window.location.href).href;
+        links += `<link rel="stylesheet" href="${absoluteUrl}">\n`;
       }
-    };
-
-    try {
-      // Generate PDF
-      await html2pdf()
-        .set(pdfOptions)
-        .from(container)
-        .save();
-
-      this.hideLoading();
-      return true;
-    } catch (error) {
-      console.error('Error generating multiple PDFs:', error);
-      this.hideLoading();
-      alert('Error generating PDF. Please try again.');
-      return false;
-    }
+    });
+    
+    return links;
   }
 
   /**
-   * Get paper dimensions for preview
+   * Get paper dimensions for preview (kept for compatibility)
    */
   getPaperDimensions(paperSizeId) {
-    return this.paperConfigs[paperSizeId] || this.paperConfigs['a4'];
+    const configs = {
+      'thermal': { width: 80, height: 200 },
+      'a4': { width: 210, height: 297 },
+      'a5': { width: 148, height: 210 },
+      'letter': { width: 215.9, height: 279.4 },
+      'legal': { width: 215.9, height: 355.6 },
+      'half-letter': { width: 139.7, height: 215.9 }
+    };
+    return configs[paperSizeId] || configs['a4'];
   }
 }
 
