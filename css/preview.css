@@ -9,7 +9,7 @@
   min-height: 0;
 }
 
-/* Preview Container */
+/* Preview Container - no padding here, applied to individual bills */
 .preview-container {
   background-color: var(--color-gray-100);
   border-radius: var(--radius-md);
@@ -17,12 +17,19 @@
   overflow: auto;
   flex: 1;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-6);
 }
 
-/* Bill Preview Base Styles */
+/* Bill Preview Base Styles - Container for multiple bills */
 .bill-preview {
+  /* CSS Custom Properties for paper size (set via JS) */
+  --bill-width: 210mm;
+  --bill-max-height: 297mm;
+  --bill-padding: 10mm;
+  --bill-font-size: 11px;
+  
   /* Base Template Variables - overridden by each template */
   --bill-bg: #ffffff;
   --bill-text: #333333;
@@ -37,17 +44,64 @@
   --bill-accent: #2563eb;
   --bill-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 
+  /* Container styles for multiple bills */
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  width: 100%;
+}
+
+/* Single bill display - when bill preview has direct content (not bill-preview-item children) */
+/* This applies the bill styling directly when there's only one bill */
+.bill-preview.single-bill,
+.bill-preview:not(:has(.bill-preview-item)) {
   background-color: var(--bill-bg);
   color: var(--bill-text);
   font-family: var(--bill-font);
-  width: 210mm;
+  width: var(--bill-width);
   min-height: auto;
-  max-height: 297mm;
-  padding: 10mm;
+  max-height: var(--bill-max-height);
+  padding: var(--bill-padding);
   margin: 0 auto;
   box-shadow: var(--shadow-lg);
   box-sizing: border-box;
   overflow: hidden;
+  font-size: var(--bill-font-size);
+  display: block;
+  border-radius: var(--radius-md);
+}
+
+/* Multiple bills container - override display when has bill items */
+.bill-preview:has(.bill-preview-item),
+.bill-preview.multiple-bills {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  max-height: none;
+}
+
+/* Individual bill item styles (for multiple bills) */
+.bill-preview-item {
+  background-color: var(--bill-bg);
+  color: var(--bill-text);
+  font-family: var(--bill-font);
+  width: var(--bill-width, 210mm);
+  min-height: auto;
+  max-height: var(--bill-max-height, 297mm);
+  padding: var(--bill-padding, 10mm);
+  box-shadow: var(--shadow-lg);
+  box-sizing: border-box;
+  overflow: hidden;
+  font-size: var(--bill-font-size, 11px);
+  position: relative;
+  border-radius: var(--radius-md);
+  margin-top: 15px; /* Space for the bill label */
 }
 
 /* Placeholder */
@@ -291,6 +345,17 @@
     box-shadow: none;
     margin: 0;
   }
+  
+  .bill-preview-item {
+    box-shadow: none;
+    margin: 0;
+    page-break-after: always;
+    page-break-inside: avoid;
+  }
+  
+  .bill-preview-item:last-child {
+    page-break-after: auto;
+  }
 }
 
 /* Multiple Bills / Page Break Support */
@@ -301,4 +366,88 @@
 
 .bill-page:last-child {
   page-break-after: auto;
+}
+
+/* Template inheritance for bill items */
+.bill-preview[data-template] .bill-preview-item {
+  /* Inherit template variables from parent */
+}
+
+/* Paper size inheritance for bill items */
+.bill-preview[data-paper-size="thermal"] .bill-preview-item,
+.bill-preview[data-paper-size="thermal"].single-bill,
+.bill-preview[data-paper-size="thermal"]:not(:has(.bill-preview-item)) {
+  --bill-width: 80mm;
+  --bill-max-height: 200mm;
+  --bill-padding: 3mm;
+  --bill-font-size: 9px;
+  width: 80mm;
+  max-height: 200mm;
+  padding: 3mm;
+  font-size: 9px;
+}
+
+.bill-preview[data-paper-size="a4"] .bill-preview-item,
+.bill-preview[data-paper-size="a4"].single-bill,
+.bill-preview[data-paper-size="a4"]:not(:has(.bill-preview-item)) {
+  --bill-width: 210mm;
+  --bill-max-height: 297mm;
+  --bill-padding: 10mm;
+  --bill-font-size: 11px;
+  width: 210mm;
+  max-height: 297mm;
+  padding: 10mm;
+  font-size: 11px;
+}
+
+.bill-preview[data-paper-size="a5"] .bill-preview-item,
+.bill-preview[data-paper-size="a5"].single-bill,
+.bill-preview[data-paper-size="a5"]:not(:has(.bill-preview-item)) {
+  --bill-width: 148mm;
+  --bill-max-height: 210mm;
+  --bill-padding: 8mm;
+  --bill-font-size: 10px;
+  width: 148mm;
+  max-height: 210mm;
+  padding: 8mm;
+  font-size: 10px;
+}
+
+.bill-preview[data-paper-size="letter"] .bill-preview-item,
+.bill-preview[data-paper-size="letter"].single-bill,
+.bill-preview[data-paper-size="letter"]:not(:has(.bill-preview-item)) {
+  --bill-width: 8.5in;
+  --bill-max-height: 11in;
+  --bill-padding: 0.4in;
+  --bill-font-size: 11px;
+  width: 8.5in;
+  max-height: 11in;
+  padding: 0.4in;
+  font-size: 11px;
+}
+
+.bill-preview[data-paper-size="legal"] .bill-preview-item,
+.bill-preview[data-paper-size="legal"].single-bill,
+.bill-preview[data-paper-size="legal"]:not(:has(.bill-preview-item)) {
+  --bill-width: 8.5in;
+  --bill-max-height: 14in;
+  --bill-padding: 0.4in;
+  --bill-font-size: 11px;
+  width: 8.5in;
+  max-height: 14in;
+  padding: 0.4in;
+  font-size: 11px;
+}
+
+.bill-preview[data-paper-size="half-letter"] .bill-preview-item,
+.bill-preview[data-paper-size="half-letter"].single-bill,
+.bill-preview[data-paper-size="half-letter"]:not(:has(.bill-preview-item)) {
+  --bill-width: 5.5in;
+  --bill-max-height: 8.5in;
+  --bill-padding: 0.3in;
+  --bill-font-size: 10px;
+  width: 5.5in;
+  max-height: 8.5in;
+  padding: 0.3in;
+  font-size: 10px;
 }

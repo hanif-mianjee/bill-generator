@@ -163,26 +163,59 @@ class App {
   }
 
   /**
-   * Update the preview
+   * Update the preview - handles single and multiple bills
    */
   updatePreview(formData) {
     this.preview.setTemplate(formData.templateId);
-    this.preview.render({
-      customerName: formData.customerName,
-      billDate: formData.billDate,
-      selectedMedicines: this.selectedMedicines,
-      store: this.currentStore,
-      totalAmount: formData.totalAmount
-    });
+    this.preview.setPaperSize(formData.paperSizeId || 'thermal');
+
+    const amounts = formData.totalAmounts || [formData.totalAmount];
+    const hasMultipleBills = amounts.length > 1;
+
+    if (hasMultipleBills) {
+      // Generate medicines for each bill amount
+      const billsData = amounts.map(amount => ({
+        amount: amount,
+        medicines: this.medicineSelector.selectMedicines(amount)
+      }));
+
+      // Regenerate bill numbers for all bills
+      this.preview.regenerateBillNumber(amounts.length);
+
+      // Render multiple bills preview
+      this.preview.renderMultiple({
+        customerName: formData.customerName,
+        billDate: formData.billDate,
+        billsData: billsData,
+        store: this.currentStore,
+        dateStrategy: formData.dateStrategy || 'sequential'
+      });
+
+      // Store bills data for PDF generation
+      this.multipleBillsData = billsData;
+    } else {
+      // Single bill - use existing logic
+      this.preview.render({
+        customerName: formData.customerName,
+        billDate: formData.billDate,
+        selectedMedicines: this.selectedMedicines,
+        store: this.currentStore,
+        totalAmount: formData.totalAmount
+      });
+      this.multipleBillsData = null;
+    }
 
     // Enable download button if valid
-    const hasMultipleBills = formData.totalAmounts && formData.totalAmounts.length > 1;
-    this.downloadBtn.disabled = !this.formHandler.isValid() || this.selectedMedicines.length === 0;
+    const hasValidMedicines = hasMultipleBills 
+      ? amounts.every(amount => this.medicineSelector.selectMedicines(amount).length > 0)
+      : this.selectedMedicines.length > 0;
+    
+    this.downloadBtn.disabled = !this.formHandler.isValid() || !hasValidMedicines;
 
     // Update download button text
     const downloadIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
     if (hasMultipleBills) {
-      this.downloadBtn.innerHTML = `${downloadIcon}<span>Download ${formData.totalAmounts.length} Bills</span>`;
+      this.downloadBtn.innerHTML = `${downloadIcon}<span>Download ${amounts.length} Bills</span>`;
     } else {
       this.downloadBtn.innerHTML = `${downloadIcon}<span>Download PDF</span>`;
     }
@@ -195,11 +228,17 @@ class App {
     const formData = this.formHandler.getFormData();
 
     if (this.formHandler.isValid()) {
-      // Get new bill number
-      this.preview.regenerateBillNumber();
+      const amounts = formData.totalAmounts || [formData.totalAmount];
+      
+      // Regenerate bill numbers for all bills
+      this.preview.regenerateBillNumber(amounts.length);
 
-      // Regenerate medicines
-      this.selectMedicines(formData.totalAmount);
+      // Regenerate medicines for single bill
+      if (amounts.length === 1) {
+        this.selectMedicines(formData.totalAmount);
+      }
+      
+      // Update preview (this will regenerate medicines for multiple bills too)
       this.updatePreview(formData);
     }
   }

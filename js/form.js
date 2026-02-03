@@ -93,6 +93,11 @@ class FormHandler {
       this.onChange(this.getFormData(), 'paperSize');
     });
 
+    // Date strategy select
+    this.inputs.dateStrategy.addEventListener('change', () => {
+      this.debouncedOnChange();
+    });
+
     // Thermal mode checkbox
     this.inputs.thermalMode.addEventListener('change', () => {
       this.toggleThermalMode();
