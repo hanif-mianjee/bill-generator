@@ -52,9 +52,36 @@ class PDFGenerator {
     // Get paper configuration
     const paperConfig = this.paperConfigs[paperSize] || this.paperConfigs['a4'];
 
-    // PDF options optimized for single page with no extra margins
+    // Clone the element to avoid modifying the original
+    const clonedElement = element.cloneNode(true);
+    
+    // Create a temporary container with proper styling
+    const tempContainer = document.createElement('div');
+    tempContainer.style.cssText = `
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: ${paperConfig.width}mm;
+      background: white;
+      z-index: 999999;
+      opacity: 0;
+      pointer-events: none;
+    `;
+    
+    // Ensure cloned element has proper display
+    clonedElement.style.cssText = `
+      width: 100%;
+      background: white;
+      display: block;
+      visibility: visible;
+    `;
+    
+    tempContainer.appendChild(clonedElement);
+    document.body.appendChild(tempContainer);
+
+    // PDF options optimized for single page
     const pdfOptions = {
-      margin: 0,
+      margin: [2, 2, 2, 2],
       filename: pdfFilename,
       image: {
         type: 'jpeg',
@@ -64,7 +91,12 @@ class PDFGenerator {
         scale: paperConfig.scale,
         useCORS: true,
         letterRendering: true,
-        logging: false
+        logging: false,
+        backgroundColor: '#ffffff',
+        windowWidth: tempContainer.offsetWidth,
+        windowHeight: tempContainer.offsetHeight,
+        scrollX: 0,
+        scrollY: 0
       },
       jsPDF: {
         unit: 'mm',
@@ -78,16 +110,26 @@ class PDFGenerator {
     try {
       this.showLoading();
 
-      // Generate PDF directly from element
+      // Wait for any async rendering to complete
+      await new Promise(resolve => setTimeout(resolve, 200));
+
+      // Generate PDF from cloned element
       await html2pdf()
         .set(pdfOptions)
-        .from(element)
+        .from(clonedElement)
         .save();
+
+      // Clean up
+      document.body.removeChild(tempContainer);
 
       this.hideLoading();
       return true;
     } catch (error) {
       console.error('Error generating PDF:', error);
+      // Clean up on error
+      if (document.body.contains(tempContainer)) {
+        document.body.removeChild(tempContainer);
+      }
       this.hideLoading();
       alert('Error generating PDF. Please try again.');
       return false;

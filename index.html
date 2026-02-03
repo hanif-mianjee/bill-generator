@@ -18,8 +18,46 @@
   <div class="app-container">
     <!-- Header -->
     <header class="app-header">
-      <h1>Medical Bill Generator</h1>
-      <p class="tagline">Professional pharmacy bills with automatic medicine selection</p>
+      <div class="header-content">
+        <div class="brand">
+          <div class="brand-logo">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1>Medical Bill Generator</h1>
+            <p class="tagline">Create professional pharmacy bills instantly</p>
+          </div>
+        </div>
+        <div class="header-info">
+          <div class="info-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <span>Quick & Easy</span>
+          </div>
+          <div class="info-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>PDF Export</span>
+          </div>
+          <div class="info-badge">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <span>20+ Templates</span>
+          </div>
+        </div>
+      </div>
     </header>
 
     <!-- Main Content -->
@@ -57,6 +95,17 @@
             <span class="error-message" id="billDateError"></span>
           </div>
 
+          <!-- Date Strategy (for multiple bills) -->
+          <div class="form-group" id="dateStrategyGroup" style="display: none;">
+            <label for="dateStrategy" class="form-label">Date Strategy (Multiple Bills)</label>
+            <select id="dateStrategy" name="dateStrategy" class="form-input">
+              <option value="same">Same date for all bills</option>
+              <option value="sequential">Sequential dates (10-15 days apart)</option>
+              <option value="random">Random dates (within last 30 days)</option>
+            </select>
+            <span class="hint">Choose how dates are assigned to multiple bills</span>
+          </div>
+
           <!-- Total Amount(s) -->
           <div class="form-group">
             <label for="totalAmounts" class="form-label">Total Amount(s) (PKR) <span class="required">*</span></label>
@@ -75,6 +124,53 @@
           <!-- Hidden single amount field for compatibility -->
           <input type="hidden" id="totalAmount" name="totalAmount" value="0">
 
+          <!-- Thermal Receipt Mode -->
+          <div class="form-group">
+            <div style="
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              border-radius: 8px;
+              padding: 16px;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              cursor: pointer;
+              transition: all 0.3s ease;
+            " onclick="document.getElementById('thermalMode').click();">
+              <label style="
+                display: flex;
+                align-items: center;
+                color: white;
+                font-weight: 600;
+                font-size: 15px;
+                cursor: pointer;
+                margin: 0;
+              ">
+                <input type="checkbox" id="thermalMode" name="thermalMode" checked style="
+                  margin-right: 12px;
+                  width: 20px;
+                  height: 20px;
+                  cursor: pointer;
+                  accent-color: #ffd700;
+                " onclick="event.stopPropagation();">
+                <span>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 8px;">
+                    <rect x="2" y="3" width="20" height="18" rx="2" ry="2"></rect>
+                    <line x1="7" y1="8" x2="17" y2="8"></line>
+                    <line x1="7" y1="12" x2="17" y2="12"></line>
+                    <line x1="7" y1="16" x2="14" y2="16"></line>
+                  </svg>
+                  Thermal Receipt Mode (80mm Printer)
+                </span>
+              </label>
+              <div style="
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 12px;
+                margin-top: 8px;
+                margin-left: 32px;
+              ">
+                ✓ Optimized for thermal printers • Compact layout • Fast printing
+              </div>
+            </div>
+          </div>
+
           <!-- Store Selection -->
           <div class="form-group">
             <label for="storeSelect" class="form-label">Pharmacy Store</label>
@@ -92,7 +188,7 @@
           </div>
 
           <!-- Template Selection -->
-          <div class="form-group">
+          <div class="form-group" id="templateGroup">
             <label for="templateSelect" class="form-label">Bill Template</label>
             <div class="select-with-action">
               <select id="templateSelect" name="templateSelect" class="form-input">
@@ -108,27 +204,30 @@
           </div>
 
           <!-- Paper Size Selection -->
-          <div class="form-group">
+          <div class="form-group" id="paperSizeGroup">
             <label for="paperSizeSelect" class="form-label">Paper Size</label>
             <select id="paperSizeSelect" name="paperSizeSelect" class="form-input">
               <!-- Options populated by JavaScript -->
             </select>
-            <span class="hint">Thermal (80mm) auto-selects thermal template</span>
           </div>
 
           <!-- Action Buttons -->
           <div class="form-actions">
             <button type="button" id="regenerateBtn" class="btn btn-secondary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 4 23 10 17 10"></polyline>
+                <polyline points="1 20 1 14 7 14"></polyline>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
               </svg>
-              Regenerate Items
+              <span>Regenerate Items</span>
             </button>
             <button type="button" id="downloadBtn" class="btn btn-primary" disabled>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
               </svg>
-              Download PDF
+              <span>Download PDF</span>
             </button>
           </div>
         </form>

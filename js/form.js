@@ -14,7 +14,9 @@ class FormHandler {
       totalAmount: document.getElementById('totalAmount'), // Hidden field for compatibility
       storeSelect: document.getElementById('storeSelect'),
       templateSelect: document.getElementById('templateSelect'),
-      paperSizeSelect: document.getElementById('paperSizeSelect')
+      paperSizeSelect: document.getElementById('paperSizeSelect'),
+      dateStrategy: document.getElementById('dateStrategy'),
+      thermalMode: document.getElementById('thermalMode')
     };
     this.errors = {
       customerName: document.getElementById('customerNameError'),
@@ -38,6 +40,11 @@ class FormHandler {
 
     // Add event listeners
     this.addEventListeners();
+    
+    // Initialize thermal mode if checkbox is checked by default
+    if (this.inputs.thermalMode.checked) {
+      this.toggleThermalMode();
+    }
   }
 
   /**
@@ -67,6 +74,7 @@ class FormHandler {
     // Total amounts (textarea for multiple)
     this.inputs.totalAmounts.addEventListener('input', () => {
       this.validateField('totalAmounts');
+      this.toggleDateStrategy();
       this.debouncedOnChange();
     });
 
@@ -82,6 +90,14 @@ class FormHandler {
 
     // Paper size select
     this.inputs.paperSizeSelect.addEventListener('change', () => {
+      this.onChange(this.getFormData(), 'paperSize');
+    });
+
+    // Thermal mode checkbox
+    this.inputs.thermalMode.addEventListener('change', () => {
+      this.toggleThermalMode();
+      // Trigger both template and paperSize changes to update preview
+      this.onChange(this.getFormData(), 'template');
       this.onChange(this.getFormData(), 'paperSize');
     });
 
@@ -224,6 +240,47 @@ class FormHandler {
   }
 
   /**
+   * Toggle thermal mode visibility and values
+   */
+  toggleThermalMode() {
+    const thermalMode = this.inputs.thermalMode.checked;
+    const templateGroup = document.getElementById('templateGroup');
+    const paperSizeGroup = document.getElementById('paperSizeGroup');
+    
+    if (thermalMode) {
+      // Hide template and paper size selectors
+      templateGroup.style.display = 'none';
+      paperSizeGroup.style.display = 'none';
+      
+      // Set to thermal values
+      this.inputs.templateSelect.value = 'thermal-print';
+      this.inputs.paperSizeSelect.value = 'thermal';
+    } else {
+      // Show template and paper size selectors
+      templateGroup.style.display = 'block';
+      paperSizeGroup.style.display = 'block';
+      
+      // Set to default values (simple-receipt and a4)
+      this.inputs.templateSelect.value = 'simple-receipt';
+      this.inputs.paperSizeSelect.value = 'a4';
+    }
+  }
+
+  /**
+   * Toggle date strategy visibility based on number of amounts
+   */
+  toggleDateStrategy() {
+    const amounts = this.parseAmounts();
+    const dateStrategyGroup = document.getElementById('dateStrategyGroup');
+    
+    if (amounts.length > 1) {
+      dateStrategyGroup.style.display = 'block';
+    } else {
+      dateStrategyGroup.style.display = 'none';
+    }
+  }
+
+  /**
    * Get form data
    */
   getFormData() {
@@ -235,7 +292,9 @@ class FormHandler {
       totalAmounts: amounts,
       storeId: this.inputs.storeSelect.value,
       templateId: this.inputs.templateSelect.value,
-      paperSizeId: this.inputs.paperSizeSelect.value
+      paperSizeId: this.inputs.paperSizeSelect.value,
+      dateStrategy: this.inputs.dateStrategy.value || 'sequential',
+      thermalMode: this.inputs.thermalMode.checked
     };
   }
 
@@ -252,8 +311,9 @@ class FormHandler {
    * Populate template select options
    */
   populateTemplates(templates) {
+    // Include all templates but hide thermal-print visually
     this.inputs.templateSelect.innerHTML = templates.map(template =>
-      `<option value="${template.id}">${template.name}</option>`
+      `<option value="${template.id}" ${template.id === 'thermal-print' ? 'style="display:none;"' : ''}>${template.name}</option>`
     ).join('');
   }
 
@@ -261,8 +321,9 @@ class FormHandler {
    * Populate paper size select options
    */
   populatePaperSizes(paperSizes) {
+    // Include all sizes but hide thermal visually
     this.inputs.paperSizeSelect.innerHTML = paperSizes.map(size =>
-      `<option value="${size.id}">${size.name}</option>`
+      `<option value="${size.id}" ${size.id === 'thermal' ? 'style="display:none;"' : ''}>${size.name}</option>`
     ).join('');
   }
 

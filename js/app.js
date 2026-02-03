@@ -49,12 +49,10 @@ class App {
       // Set initial store and template (defaults)
       this.currentStore = this.stores[0];
 
-      // Set default template to thermal-print
+      // Since thermal mode is checked by default, use thermal settings
       this.preview.setTemplate('thermal-print');
       this.preview.setPaperSize('thermal');
-
-      // Initialize paper size options based on default template
-      this.updatePaperSizeOptions('thermal-print');
+      this.currentPaperSize = 'thermal';
 
       // Set up event listeners
       this.setupEventListeners();
@@ -115,54 +113,33 @@ class App {
       // Template changed
       this.preview.setTemplate(data.templateId);
 
-      // If non-thermal template selected, disable thermal paper option
-      // If thermal template selected, enable thermal paper option
-      this.updatePaperSizeOptions(data.templateId);
+      // Update preview with new template
+      if (this.formHandler.isValid()) {
+        this.updatePreview(data);
+      }
     } else if (changeType === 'paperSize') {
       // Paper size changed
       this.currentPaperSize = data.paperSizeId;
       this.preview.setPaperSize(data.paperSizeId);
 
-      // If thermal paper is selected, auto-switch to thermal template
-      if (data.paperSizeId === 'thermal') {
-        this.formHandler.setTemplate('thermal-print');
-        this.preview.setTemplate('thermal-print');
+      // Update preview with new paper size
+      if (this.formHandler.isValid()) {
+        this.updatePreview(data);
+      }
+    } else if (changeType === 'thermalMode') {
+      // Thermal mode changed
+      this.preview.setTemplate(data.templateId);
+      this.preview.setPaperSize(data.paperSizeId);
+      
+      // Update preview
+      if (this.formHandler.isValid()) {
+        this.updatePreview(data);
       }
     } else {
       // Data changed - regenerate medicines and update preview
       this.updateStore(data.storeId);
       this.selectMedicines(data.totalAmount);
       this.updatePreview(data);
-    }
-  }
-
-  /**
-   * Update paper size options based on selected template
-   * Thermal paper only available with thermal template
-   */
-  updatePaperSizeOptions(templateId) {
-    const paperSizeSelect = document.getElementById('paperSizeSelect');
-    const thermalOption = paperSizeSelect.querySelector('option[value="thermal"]');
-
-    if (templateId === 'thermal-print') {
-      // Thermal template - enable thermal paper option
-      if (thermalOption) {
-        thermalOption.disabled = false;
-        thermalOption.textContent = 'Thermal (80mm)';
-      }
-    } else {
-      // Non-thermal template - disable thermal paper option
-      if (thermalOption) {
-        thermalOption.disabled = true;
-        thermalOption.textContent = 'Thermal (80mm) - Only with Thermal template';
-
-        // If thermal paper was selected, switch to A5
-        if (paperSizeSelect.value === 'thermal') {
-          paperSizeSelect.value = 'a5';
-          this.currentPaperSize = 'a5';
-          this.preview.setPaperSize('a5');
-        }
-      }
     }
   }
 
@@ -203,11 +180,11 @@ class App {
     this.downloadBtn.disabled = !this.formHandler.isValid() || this.selectedMedicines.length === 0;
 
     // Update download button text
-    const downloadIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>`;
+    const downloadIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
     if (hasMultipleBills) {
-      this.downloadBtn.innerHTML = `${downloadIcon} Download ${formData.totalAmounts.length} Bills`;
+      this.downloadBtn.innerHTML = `${downloadIcon}<span>Download ${formData.totalAmounts.length} Bills</span>`;
     } else {
-      this.downloadBtn.innerHTML = `${downloadIcon} Download PDF`;
+      this.downloadBtn.innerHTML = `${downloadIcon}<span>Download PDF</span>`;
     }
   }
 
@@ -256,13 +233,28 @@ class App {
    * Generate a date offset from base date
    * @param {Date} baseDate - Starting date
    * @param {number} index - Bill index (0 = base date, 1 = day before, etc.)
+   * @param {string} strategy - Date strategy: 'same', 'sequential', or 'random'
    * @returns {string} Date in YYYY-MM-DD format
    */
-  generateBillDate(baseDate, index) {
+  generateBillDate(baseDate, index, strategy = 'sequential') {
     const date = new Date(baseDate);
-    // Spread bills over random days (1-3 days apart)
-    const daysBack = index * (Math.floor(Math.random() * 3) + 1);
-    date.setDate(date.getDate() - daysBack);
+    
+    if (strategy === 'same') {
+      // All bills get the same date
+      return date.toISOString().split('T')[0];
+    } else if (strategy === 'sequential') {
+      // Spread bills over sequential days (10-15 days apart)
+      const daysApart = Math.floor(Math.random() * 6) + 10; // 10-15 days
+      const daysBack = index * daysApart;
+      date.setDate(date.getDate() - daysBack);
+      return date.toISOString().split('T')[0];
+    } else if (strategy === 'random') {
+      // Random dates within last 30 days
+      const daysBack = Math.floor(Math.random() * 31); // 0-30 days back
+      date.setDate(date.getDate() - daysBack);
+      return date.toISOString().split('T')[0];
+    }
+    
     return date.toISOString().split('T')[0];
   }
 
@@ -309,6 +301,7 @@ class App {
   async generateMultipleBills(formData, amounts) {
     const baseDate = new Date(formData.billDate);
     const paperSize = formData.paperSizeId || 'thermal';
+    const dateStrategy = formData.dateStrategy || 'sequential';
 
     // Get paper config for sizing
     const paperConfigs = {
@@ -338,8 +331,8 @@ class App {
         // Generate different medicines for each bill
         const medicines = this.medicineSelector.selectMedicines(amount);
 
-        // Generate different date for each bill
-        const billDate = this.generateBillDate(baseDate, i);
+        // Generate different date for each bill based on strategy
+        const billDate = this.generateBillDate(baseDate, i, dateStrategy);
 
         // Generate unique bill number
         const billNumber = this.generateBillNumber();

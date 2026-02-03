@@ -4,6 +4,9 @@
   padding: var(--spacing-6);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 /* Preview Container */
@@ -12,7 +15,10 @@
   border-radius: var(--radius-md);
   padding: var(--spacing-4);
   overflow: auto;
-  max-height: 80vh;
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 /* Bill Preview Base Styles */
