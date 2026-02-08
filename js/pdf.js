@@ -147,7 +147,15 @@ class PDFGenerator {
 
   /**
    * Export mode - generates a real PDF file using html2pdf.js
-   * Each bill gets its own page. Page height adapts to bill content.
+   * Each bill gets its own page. If a bill exceeds the paper height,
+   * the page height expands to fit (no breaking a single bill).
+   *
+   * Approach: open a popup window with the bill HTML + stylesheets +
+   * html2pdf.js, then run the export inside that window where the
+   * content is inline and visible (html2canvas requires normal document
+   * flow — it produces 0-height canvases for fixed/absolute elements).
+   * The popup processes each bill, builds the PDF, triggers a download
+   * via the opener window, then closes itself.
    */
   async export(previewElement, options = {}) {
     const {
@@ -156,89 +164,159 @@ class PDFGenerator {
       billCount = 1
     } = options;
 
-    if (typeof html2pdf === 'undefined') {
-      alert('PDF library not loaded. Please check your internet connection and refresh.');
-      return false;
-    }
-
     this.showLoading('Generating PDF...');
 
     try {
       const paper = this.paperConfigs[paperSize] || this.paperConfigs['a4'];
       const pageWidthMm = paper.width;
+      const pageHeightMm = paper.height;
 
-      // Handle both single bills (no .bill-preview-item) and multiple bills
-      let billItems = previewElement.querySelectorAll('.bill-preview-item');
-      const isSingleBill = billItems.length === 0;
+      // Clone and clean preview content
+      const content = previewElement.cloneNode(true);
+      content.querySelectorAll('.bill-label').forEach(el => el.remove());
+      content.querySelectorAll('.bill-placeholder').forEach(el => el.remove());
 
-      if (isSingleBill) {
-        // Single bill: the preview container itself is the bill
-        billItems = [previewElement];
+      // Ensure single bills are wrapped in .bill-preview-item for uniform handling
+      const hasItems = content.querySelectorAll('.bill-preview-item').length > 0;
+      if (!hasItems) {
+        // Single bill — wrap inner content in a .bill-preview-item
+        const wrapper = document.createElement('div');
+        wrapper.className = 'bill-preview-item';
+        wrapper.setAttribute('data-template', content.getAttribute('data-template') || '');
+        wrapper.setAttribute('data-paper-size', content.getAttribute('data-paper-size') || '');
+        while (content.firstChild) {
+          wrapper.appendChild(content.firstChild);
+        }
+        content.appendChild(wrapper);
       }
 
-      // Unique scope ID so override styles don't leak to main page
-      const scopeId = 'pdf-export-' + Date.now();
+      const stylesheets = this.getStylesheetLinks();
+      const html2pdfCDN = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.2/html2pdf.bundle.min.js';
 
-      // Create offscreen container
-      const offscreen = document.createElement('div');
-      offscreen.id = scopeId;
-      offscreen.style.cssText = `
-        position: fixed; left: -9999px; top: 0;
-        width: ${pageWidthMm}mm;
-        background: white;
-      `;
-      document.body.appendChild(offscreen);
+      // Build the export document for the popup window
+      // The popup body is set to exactly the paper width so html2canvas
+      // captures the element at the correct size — no wider, no narrower.
+      const exportDoc = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Exporting PDF...</title>
+  ${stylesheets}
+  <style>
+    /* Lock the viewport to the exact paper width */
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      width: ${pageWidthMm}mm;
+      overflow-x: hidden;
+    }
 
-      // Scoped override styles (only affect elements inside #scopeId)
-      const scopedStyle = document.createElement('style');
-      scopedStyle.textContent = `
-        #${scopeId} .bill-preview,
-        #${scopeId} .bill-preview-item,
-        #${scopeId} [data-template] {
-          box-shadow: none !important;
-          margin: 0 !important;
-        }
-        #${scopeId} .bill-label { display: none !important; }
-        #${scopeId} .bill-placeholder { display: none !important; }
-        #${scopeId} .bill-preview.multiple-bills { gap: 0 !important; }
-      `;
-      document.head.appendChild(scopedStyle);
+    /* Force bill containers to fill the paper width exactly */
+    .bill-preview {
+      width: ${pageWidthMm}mm !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      box-shadow: none !important;
+      background: transparent !important;
+      max-height: none !important;
+      gap: 0 !important;
+    }
+
+    .bill-preview-item {
+      display: none;
+      width: ${pageWidthMm}mm !important;
+      max-height: none !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
+      overflow: visible !important;
+      box-sizing: border-box !important;
+    }
+
+    .bill-preview-item.pdf-active {
+      display: block;
+    }
+
+    .bill-label {
+      display: none !important;
+    }
+
+    #status {
+      position: fixed; top: 0; left: 0; right: 0;
+      background: #1e293b; color: white;
+      padding: 12px 20px; font-family: sans-serif; font-size: 14px;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div id="status">Preparing export...</div>
+  ${content.outerHTML}
+  <script src="${html2pdfCDN}"><\/script>
+  <script>
+    (async function() {
+      const status = document.getElementById('status');
+      const pageWidthMm = ${pageWidthMm};
+      const paperHeightMm = ${pageHeightMm || 'null'};
+      const customerName = ${JSON.stringify(customerName)};
+
+      // Wait for stylesheets to load
+      const links = document.querySelectorAll('link[rel="stylesheet"]');
+      await Promise.all(Array.from(links).map(link =>
+        new Promise(resolve => {
+          if (link.sheet) return resolve();
+          link.onload = resolve;
+          link.onerror = resolve;
+        })
+      ));
+
+      // Wait for html2pdf to load
+      while (typeof html2pdf === 'undefined') {
+        await new Promise(r => setTimeout(r, 100));
+      }
+
+      await new Promise(r => setTimeout(r, 200));
+
+      // Hide status bar before rendering so it doesn't interfere
+      const billItems = document.querySelectorAll('.bill-preview-item');
+      if (billItems.length === 0) {
+        status.textContent = 'No bills found.';
+        setTimeout(() => window.close(), 2000);
+        return;
+      }
 
       let pdf = null;
 
       for (let i = 0; i < billItems.length; i++) {
-        this.showLoading(`Generating PDF... (${i + 1}/${billItems.length})`);
+        status.textContent = 'Generating PDF... (' + (i + 1) + '/' + billItems.length + ')';
 
-        const billClone = billItems[i].cloneNode(true);
-        billClone.querySelectorAll('.bill-label').forEach(el => el.remove());
-        billClone.querySelectorAll('.bill-placeholder').forEach(el => el.remove());
+        // Show only this bill
+        billItems.forEach(el => el.classList.remove('pdf-active'));
+        billItems[i].classList.add('pdf-active');
 
-        // Wrapper to constrain width and measure height
-        const wrapper = document.createElement('div');
-        wrapper.style.cssText = `
-          width: ${pageWidthMm}mm;
-          background: white;
-          overflow: visible;
-        `;
-        wrapper.appendChild(billClone);
-        offscreen.appendChild(wrapper);
+        await new Promise(r => setTimeout(r, 100));
 
-        // Let the browser lay out the content
-        await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+        // Hide status bar during canvas capture
+        status.style.display = 'none';
 
-        // Measure the actual rendered height in mm
-        const rect = wrapper.getBoundingClientRect();
-        const pxPerMm = pageWidthMm > 0 ? rect.width / pageWidthMm : 3.7795;
-        const contentHeightMm = rect.height / pxPerMm;
+        const el = billItems[i];
 
-        // Determine page height: use paper height or expand to fit content
-        let pageHeightMm;
-        if (!paper.height) {
-          pageHeightMm = contentHeightMm + 2;
-        } else if (contentHeightMm > paper.height) {
-          pageHeightMm = contentHeightMm + 2;
+        // Pre-render to canvas to measure actual content height
+        const measureCanvas = await html2pdf().set({
+          margin: 0,
+          html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+          jsPDF: { unit: 'mm', format: [pageWidthMm, 5000], orientation: 'portrait' }
+        }).from(el).toCanvas().get('canvas');
+
+        // Derive page height from actual canvas content
+        const imgHeightMm = (measureCanvas.height / measureCanvas.width) * pageWidthMm;
+        let thisPageHeight;
+        if (!paperHeightMm) {
+          thisPageHeight = imgHeightMm + 1;
         } else {
-          pageHeightMm = paper.height;
+          thisPageHeight = Math.max(paperHeightMm, imgHeightMm + 1);
         }
 
         const opt = {
@@ -247,45 +325,60 @@ class PDFGenerator {
           html2canvas: {
             scale: 2,
             useCORS: true,
-            letterRendering: true,
-            backgroundColor: '#ffffff',
-            width: rect.width,
-            height: rect.height,
-            windowWidth: rect.width
+            backgroundColor: '#ffffff'
           },
           jsPDF: {
             unit: 'mm',
-            format: [pageWidthMm, pageHeightMm],
-            orientation: pageWidthMm > pageHeightMm ? 'landscape' : 'portrait'
+            format: [pageWidthMm, thisPageHeight],
+            orientation: pageWidthMm > thisPageHeight ? 'landscape' : 'portrait'
           },
           pagebreak: { mode: 'avoid-all' }
         };
 
         if (i === 0) {
-          const worker = html2pdf().set(opt).from(wrapper);
-          pdf = await worker.toPdf().get('pdf');
+          pdf = await html2pdf().set(opt).from(el).toPdf().get('pdf');
+          // Remove any extra pages html2pdf may have added
+          const totalPages = pdf.getNumberOfPages();
+          for (let p = totalPages; p > 1; p--) {
+            pdf.deletePage(p);
+          }
         } else {
-          const canvas = await html2pdf().set(opt).from(wrapper).toCanvas().get('canvas');
-          const imgData = canvas.toDataURL('image/jpeg', 0.98);
-
-          pdf.addPage([pageWidthMm, pageHeightMm]);
-          pdf.addImage(imgData, 'JPEG', 0, 0, pageWidthMm, pageHeightMm);
+          const imgData = measureCanvas.toDataURL('image/jpeg', 0.98);
+          pdf.addPage([pageWidthMm, thisPageHeight]);
+          pdf.addImage(imgData, 'JPEG', 0, 0, pageWidthMm, imgHeightMm);
         }
 
-        offscreen.removeChild(wrapper);
+        status.style.display = '';
       }
 
-      // Save the PDF
       if (pdf) {
-        const filename = billItems.length > 1
-          ? `bills-${customerName.replace(/\s+/g, '-')}-${billItems.length}.pdf`
-          : `bill-${customerName.replace(/\s+/g, '-')}.pdf`;
+        status.textContent = 'Saving PDF...';
+        const count = billItems.length;
+        const safeName = customerName.replace(/\\s+/g, '-');
+        const filename = count > 1
+          ? 'bills-' + safeName + '-' + count + '.pdf'
+          : 'bill-' + safeName + '.pdf';
         pdf.save(filename);
       }
 
-      // Cleanup: remove offscreen container and scoped style
-      document.body.removeChild(offscreen);
-      document.head.removeChild(scopedStyle);
+      status.textContent = 'Done! You can close this window.';
+      setTimeout(() => window.close(), 1500);
+    })();
+  <\/script>
+</body>
+</html>`;
+
+      // Open popup sized to fit the paper width (px ≈ mm * 3.78 + window chrome)
+      const popupWidth = Math.max(Math.ceil(pageWidthMm * 3.78) + 40, 400);
+      const popup = window.open('', '_blank', `width=${popupWidth},height=700`);
+      if (!popup) {
+        alert('Please allow pop-ups to export PDF');
+        this.hideLoading();
+        return false;
+      }
+
+      popup.document.write(exportDoc);
+      popup.document.close();
 
       this.hideLoading();
       return true;
