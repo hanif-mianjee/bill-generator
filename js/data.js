@@ -406,6 +406,226 @@ const APP_DATA = {
     { "id": "split-design", "name": "Split Design", "description": "Two-tone split layout" }
   ],
 
+  travelItems: [
+    // AC SLEEPER
+    { "id": "TRV001", "name": "AC Sleeper", "description": "Air Conditioned Sleeper Berth", "operator": "Standard", "category": "ac-sleeper", "route": "Lahore - Karachi", "seatType": "Sleeper", "price": 5000, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV002", "name": "AC Sleeper", "description": "Air Conditioned Sleeper Berth", "operator": "Standard", "category": "ac-sleeper", "route": "Islamabad - Karachi", "seatType": "Sleeper", "price": 5500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV003", "name": "AC Sleeper", "description": "Air Conditioned Sleeper Berth", "operator": "Standard", "category": "ac-sleeper", "route": "Lahore - Islamabad", "seatType": "Sleeper", "price": 4000, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV004", "name": "AC Sleeper", "description": "Air Conditioned Sleeper Berth", "operator": "Standard", "category": "ac-sleeper", "route": "Multan - Karachi", "seatType": "Sleeper", "price": 4500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV005", "name": "AC Sleeper", "description": "Air Conditioned Sleeper Berth", "operator": "Standard", "category": "ac-sleeper", "route": "Faisalabad - Karachi", "seatType": "Sleeper", "price": 5200, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV006", "name": "AC Sleeper", "description": "Air Conditioned Sleeper Berth", "operator": "Premium", "category": "ac-sleeper", "route": "Lahore - Karachi", "seatType": "Sleeper", "price": 6000, "minQty": 1, "maxQty": 10 },
+
+    // AC BUSINESS CLASS
+    { "id": "TRV007", "name": "AC Business Class", "description": "Air Conditioned Business Seat", "operator": "Standard", "category": "ac-business", "route": "Lahore - Karachi", "seatType": "Business", "price": 4000, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV008", "name": "AC Business Class", "description": "Air Conditioned Business Seat", "operator": "Standard", "category": "ac-business", "route": "Islamabad - Karachi", "seatType": "Business", "price": 4500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV009", "name": "AC Business Class", "description": "Air Conditioned Business Seat", "operator": "Standard", "category": "ac-business", "route": "Lahore - Islamabad", "seatType": "Business", "price": 3000, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV010", "name": "AC Business Class", "description": "Air Conditioned Business Seat", "operator": "Standard", "category": "ac-business", "route": "Multan - Lahore", "seatType": "Business", "price": 3500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV011", "name": "AC Business Class", "description": "Air Conditioned Business Seat", "operator": "Premium", "category": "ac-business", "route": "Lahore - Karachi", "seatType": "Business", "price": 5000, "minQty": 1, "maxQty": 10 },
+
+    // VIP COACH
+    { "id": "TRV012", "name": "VIP Coach", "description": "VIP Luxury Coach Seat", "operator": "Standard", "category": "vip-coach", "route": "Lahore - Karachi", "seatType": "VIP", "price": 3500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV013", "name": "VIP Coach", "description": "VIP Luxury Coach Seat", "operator": "Standard", "category": "vip-coach", "route": "Islamabad - Lahore", "seatType": "VIP", "price": 2500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV014", "name": "VIP Coach", "description": "VIP Luxury Coach Seat", "operator": "Standard", "category": "vip-coach", "route": "Multan - Islamabad", "seatType": "VIP", "price": 3000, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV015", "name": "VIP Coach", "description": "VIP Luxury Coach Seat", "operator": "Premium", "category": "vip-coach", "route": "Lahore - Karachi", "seatType": "VIP", "price": 4500, "minQty": 1, "maxQty": 10 },
+
+    // AC DELUXE
+    { "id": "TRV016", "name": "AC Deluxe", "description": "Air Conditioned Deluxe Seat", "operator": "Standard", "category": "ac-deluxe", "route": "Lahore - Islamabad", "seatType": "Deluxe", "price": 2500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV017", "name": "AC Deluxe", "description": "Air Conditioned Deluxe Seat", "operator": "Standard", "category": "ac-deluxe", "route": "Lahore - Karachi", "seatType": "Deluxe", "price": 3000, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV018", "name": "AC Deluxe", "description": "Air Conditioned Deluxe Seat", "operator": "Standard", "category": "ac-deluxe", "route": "Islamabad - Karachi", "seatType": "Deluxe", "price": 3500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV019", "name": "AC Deluxe", "description": "Air Conditioned Deluxe Seat", "operator": "Standard", "category": "ac-deluxe", "route": "Faisalabad - Islamabad", "seatType": "Deluxe", "price": 2000, "minQty": 1, "maxQty": 10 },
+
+    // ECONOMY SEAT
+    { "id": "TRV020", "name": "Economy Seat", "description": "Standard Economy Class", "operator": "Standard", "category": "economy", "route": "Lahore - Islamabad", "seatType": "Economy", "price": 1200, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV021", "name": "Economy Seat", "description": "Standard Economy Class", "operator": "Standard", "category": "economy", "route": "Lahore - Karachi", "seatType": "Economy", "price": 1800, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV022", "name": "Economy Seat", "description": "Standard Economy Class", "operator": "Standard", "category": "economy", "route": "Islamabad - Karachi", "seatType": "Economy", "price": 2000, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV023", "name": "Economy Seat", "description": "Standard Economy Class", "operator": "Standard", "category": "economy", "route": "Multan - Lahore", "seatType": "Economy", "price": 800, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV024", "name": "Economy Seat", "description": "Standard Economy Class", "operator": "Standard", "category": "economy", "route": "Faisalabad - Lahore", "seatType": "Economy", "price": 900, "minQty": 1, "maxQty": 15 },
+
+    // STANDARD BUS
+    { "id": "TRV025", "name": "Standard Bus", "description": "Non-AC Standard Bus Seat", "operator": "Standard", "category": "standard-bus", "route": "Lahore - Islamabad", "seatType": "Standard", "price": 800, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV026", "name": "Standard Bus", "description": "Non-AC Standard Bus Seat", "operator": "Standard", "category": "standard-bus", "route": "Lahore - Karachi", "seatType": "Standard", "price": 1200, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV027", "name": "Standard Bus", "description": "Non-AC Standard Bus Seat", "operator": "Standard", "category": "standard-bus", "route": "Multan - Karachi", "seatType": "Standard", "price": 1000, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV028", "name": "Standard Bus", "description": "Non-AC Standard Bus Seat", "operator": "Standard", "category": "standard-bus", "route": "Peshawar - Islamabad", "seatType": "Standard", "price": 500, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV029", "name": "Standard Bus", "description": "Non-AC Standard Bus Seat", "operator": "Standard", "category": "standard-bus", "route": "Faisalabad - Islamabad", "seatType": "Standard", "price": 700, "minQty": 1, "maxQty": 15 },
+
+    // MINI COACH / COASTER
+    { "id": "TRV030", "name": "Mini Coach", "description": "AC Coaster / Mini Coach", "operator": "Standard", "category": "mini-coach", "route": "Lahore - Islamabad", "seatType": "Coaster", "price": 1500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV031", "name": "Mini Coach", "description": "AC Coaster / Mini Coach", "operator": "Standard", "category": "mini-coach", "route": "Islamabad - Peshawar", "seatType": "Coaster", "price": 1800, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV032", "name": "Mini Coach", "description": "AC Coaster / Mini Coach", "operator": "Standard", "category": "mini-coach", "route": "Lahore - Karachi", "seatType": "Coaster", "price": 2500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV033", "name": "Mini Coach", "description": "AC Coaster / Mini Coach", "operator": "Standard", "category": "mini-coach", "route": "Multan - Islamabad", "seatType": "Coaster", "price": 2000, "minQty": 1, "maxQty": 10 },
+
+    // REFRESHMENTS / EXTRAS
+    { "id": "TRV034", "name": "Meal Package", "description": "On-board Meal (Lunch/Dinner)", "operator": "Standard", "category": "extras", "route": "All Routes", "seatType": "N/A", "price": 350, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV035", "name": "Snack Box", "description": "Light Snacks & Beverages", "operator": "Standard", "category": "extras", "route": "All Routes", "seatType": "N/A", "price": 150, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV036", "name": "Blanket & Pillow", "description": "Comfort Kit (Blanket + Pillow)", "operator": "Standard", "category": "extras", "route": "All Routes", "seatType": "N/A", "price": 200, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV037", "name": "Refreshment Pack", "description": "Water + Juice + Biscuits", "operator": "Standard", "category": "extras", "route": "All Routes", "seatType": "N/A", "price": 100, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV038", "name": "Hot Beverage", "description": "Tea / Coffee Service", "operator": "Standard", "category": "extras", "route": "All Routes", "seatType": "N/A", "price": 80, "minQty": 1, "maxQty": 15 },
+    { "id": "TRV039", "name": "Breakfast Pack", "description": "Morning Breakfast Package", "operator": "Standard", "category": "extras", "route": "All Routes", "seatType": "N/A", "price": 250, "minQty": 1, "maxQty": 15 },
+
+    // LUGGAGE CHARGES
+    { "id": "TRV040", "name": "Extra Luggage", "description": "Additional Luggage (per bag)", "operator": "Standard", "category": "luggage", "route": "All Routes", "seatType": "N/A", "price": 500, "minQty": 1, "maxQty": 5 },
+    { "id": "TRV041", "name": "Oversize Luggage", "description": "Oversize/Heavy Luggage Surcharge", "operator": "Standard", "category": "luggage", "route": "All Routes", "seatType": "N/A", "price": 800, "minQty": 1, "maxQty": 3 },
+    { "id": "TRV042", "name": "Luggage Insurance", "description": "Luggage Protection Cover", "operator": "Standard", "category": "luggage", "route": "All Routes", "seatType": "N/A", "price": 300, "minQty": 1, "maxQty": 5 },
+
+    // INSURANCE
+    { "id": "TRV043", "name": "Travel Insurance", "description": "Passenger Travel Insurance", "operator": "Standard", "category": "insurance", "route": "All Routes", "seatType": "N/A", "price": 200, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV044", "name": "Premium Insurance", "description": "Comprehensive Travel Cover", "operator": "Premium", "category": "insurance", "route": "All Routes", "seatType": "N/A", "price": 500, "minQty": 1, "maxQty": 10 },
+    { "id": "TRV045", "name": "Accident Cover", "description": "Personal Accident Insurance", "operator": "Standard", "category": "insurance", "route": "All Routes", "seatType": "N/A", "price": 150, "minQty": 1, "maxQty": 10 }
+  ],
+
+  travelAgencies: [
+    {
+      "id": "AGENCY001", "name": "Daewoo Express", "tagline": "Pakistan's Premium Bus Service",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%230052A5'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='white'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%230052A5'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%230052A5'/%3E%3Crect x='14' y='22' width='20' height='8' rx='2' fill='white' opacity='0.7'/%3E%3C/svg%3E",
+      "address": { "street": "Daewoo Terminal, Thokar Niaz Baig", "area": "GT Road", "city": "Lahore", "phone": "042-111-007-008", "mobile": "0300-1111222" },
+      "license": "TL-PB-10001", "ntn": "1000001-1"
+    },
+    {
+      "id": "AGENCY002", "name": "Faisal Movers", "tagline": "Travel with Comfort & Safety",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23006B3F'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='%23FFD700'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%23006B3F'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%23006B3F'/%3E%3Crect x='14' y='22' width='20' height='8' rx='2' fill='%23FFD700' opacity='0.7'/%3E%3C/svg%3E",
+      "address": { "street": "Faisal Movers Terminal, Badami Bagh", "area": "Badami Bagh", "city": "Lahore", "phone": "042-111-128-128", "mobile": "0321-5551234" },
+      "license": "TL-PB-10002", "ntn": "1000002-2"
+    },
+    {
+      "id": "AGENCY003", "name": "Bilal Travels", "tagline": "Your Journey, Our Responsibility",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23004D40'/%3E%3Ctext x='30' y='38' font-size='18' fill='white' text-anchor='middle' font-weight='bold'%3EBT%3C/text%3E%3C/svg%3E",
+      "address": { "street": "General Bus Stand, Lahore Road", "area": "Railway Station", "city": "Faisalabad", "phone": "041-2631234", "mobile": "0333-4441234" },
+      "license": "TL-PB-10003", "ntn": "1000003-3"
+    },
+    {
+      "id": "AGENCY004", "name": "Skyways", "tagline": "Fly on the Road",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%2387CEEB'/%3E%3Cpath d='M15 35 L30 20 L45 35' stroke='white' stroke-width='3' fill='none'/%3E%3Crect x='12' y='32' width='36' height='10' rx='3' fill='white'/%3E%3Ccircle cx='20' cy='42' r='3' fill='%2387CEEB'/%3E%3Ccircle cx='40' cy='42' r='3' fill='%2387CEEB'/%3E%3C/svg%3E",
+      "address": { "street": "Skyways Terminal, Pir Wadhai", "area": "Pir Wadhai", "city": "Rawalpindi", "phone": "051-111-759-759", "mobile": "0345-6661234" },
+      "license": "TL-PB-10004", "ntn": "1000004-4"
+    },
+    {
+      "id": "AGENCY005", "name": "Niazi Express", "tagline": "Speed, Safety & Service",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23CC0000'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='white'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%23CC0000'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%23CC0000'/%3E%3Ctext x='30' y='26' font-size='12' fill='white' text-anchor='middle' font-weight='bold'%3ENE%3C/text%3E%3C/svg%3E",
+      "address": { "street": "Niazi Terminal, Kalma Chowk", "area": "Gulberg", "city": "Lahore", "phone": "042-111-642-642", "mobile": "0300-7771234" },
+      "license": "TL-PB-10005", "ntn": "1000005-5"
+    },
+    {
+      "id": "AGENCY006", "name": "Road Master", "tagline": "Masters of the Road",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%238B4513'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='%23FFD700'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%238B4513'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%238B4513'/%3E%3C/svg%3E",
+      "address": { "street": "General Bus Stand", "area": "Lorry Adda", "city": "Multan", "phone": "061-4561234", "mobile": "0312-8881234" },
+      "license": "TL-PB-10006", "ntn": "1000006-6"
+    },
+    {
+      "id": "AGENCY007", "name": "Waraich Express", "tagline": "Connecting Pakistan",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23FF8C00'/%3E%3Ctext x='30' y='38' font-size='18' fill='white' text-anchor='middle' font-weight='bold'%3EWE%3C/text%3E%3C/svg%3E",
+      "address": { "street": "Bus Terminal, GT Road", "area": "Gujranwala Bypass", "city": "Gujranwala", "phone": "055-3841234", "mobile": "0333-2221234" },
+      "license": "TL-PB-10007", "ntn": "1000007-7"
+    },
+    {
+      "id": "AGENCY008", "name": "Manthar Transport", "tagline": "Safe & Reliable Travel",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23800080'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='white'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%23800080'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%23800080'/%3E%3C/svg%3E",
+      "address": { "street": "Manthar Terminal, Super Highway", "area": "Sohrab Goth", "city": "Karachi", "phone": "021-36601234", "mobile": "0345-9991234" },
+      "license": "TL-SD-10008", "ntn": "1000008-8"
+    },
+    {
+      "id": "AGENCY009", "name": "Khan Brothers", "tagline": "Brotherhood of Travel",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23000080'/%3E%3Ctext x='30' y='38' font-size='18' fill='white' text-anchor='middle' font-weight='bold'%3EKB%3C/text%3E%3C/svg%3E",
+      "address": { "street": "Bus Stand, University Road", "area": "University Town", "city": "Peshawar", "phone": "091-5711234", "mobile": "0300-1231234" },
+      "license": "TL-KP-10009", "ntn": "1000009-9"
+    },
+    {
+      "id": "AGENCY010", "name": "New Khan", "tagline": "New Standards in Travel",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23008080'/%3E%3Ctext x='30' y='38' font-size='18' fill='white' text-anchor='middle' font-weight='bold'%3ENK%3C/text%3E%3C/svg%3E",
+      "address": { "street": "Haji Camp Bus Terminal", "area": "Saddar", "city": "Karachi", "phone": "021-32781234", "mobile": "0321-4561234" },
+      "license": "TL-SD-10010", "ntn": "1000010-0"
+    },
+    {
+      "id": "AGENCY011", "name": "Kohistan Express", "tagline": "Mountain to City Express",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23228B22'/%3E%3Cpath d='M15 42 L25 25 L35 42 Z' fill='white' opacity='0.8'/%3E%3Cpath d='M25 42 L35 22 L45 42 Z' fill='white'/%3E%3C/svg%3E",
+      "address": { "street": "Northern Bus Terminal", "area": "General Bus Stand", "city": "Mansehra", "phone": "0997-301234", "mobile": "0345-5551234" },
+      "license": "TL-KP-10011", "ntn": "1000011-1"
+    },
+    {
+      "id": "AGENCY012", "name": "Balochistan Express", "tagline": "Gateway to Balochistan",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23B22222'/%3E%3Ctext x='30' y='38' font-size='16' fill='white' text-anchor='middle' font-weight='bold'%3EBE%3C/text%3E%3C/svg%3E",
+      "address": { "street": "Quetta Bus Terminal, Sariab Road", "area": "Sariab", "city": "Quetta", "phone": "081-2831234", "mobile": "0333-8881234" },
+      "license": "TL-BL-10012", "ntn": "1000012-2"
+    },
+    {
+      "id": "AGENCY013", "name": "Punjab Coaches", "tagline": "Heart of Punjab Transport",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23DAA520'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='white'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%23DAA520'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%23DAA520'/%3E%3C/svg%3E",
+      "address": { "street": "General Bus Stand, Circular Road", "area": "Circular Road", "city": "Lahore", "phone": "042-37121234", "mobile": "0300-4441234" },
+      "license": "TL-PB-10013", "ntn": "1000013-3"
+    },
+    {
+      "id": "AGENCY014", "name": "Royal Coaches", "tagline": "Travel Like Royalty",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%234B0082'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='%23FFD700'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%234B0082'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%234B0082'/%3E%3C/svg%3E",
+      "address": { "street": "Terminal 2, Faizabad", "area": "Faizabad", "city": "Rawalpindi", "phone": "051-4431234", "mobile": "0321-7771234" },
+      "license": "TL-PB-10014", "ntn": "1000014-4"
+    },
+    {
+      "id": "AGENCY015", "name": "Sindh Express", "tagline": "Pride of Sindh",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23DC143C'/%3E%3Ctext x='30' y='38' font-size='18' fill='white' text-anchor='middle' font-weight='bold'%3ESE%3C/text%3E%3C/svg%3E",
+      "address": { "street": "Cantt Station Road", "area": "Cantt", "city": "Hyderabad", "phone": "022-2781234", "mobile": "0345-3331234" },
+      "license": "TL-SD-10015", "ntn": "1000015-5"
+    },
+    {
+      "id": "AGENCY016", "name": "Al-Makkah Travels", "tagline": "Blessed Journeys",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23006400'/%3E%3Cpath d='M25 20 L30 12 L35 20 Z' fill='%23FFD700'/%3E%3Crect x='27' y='20' width='6' height='20' fill='%23FFD700'/%3E%3C/svg%3E",
+      "address": { "street": "Near Railway Station", "area": "City Station", "city": "Lahore", "phone": "042-37241234", "mobile": "0333-1111234" },
+      "license": "TL-PB-10016", "ntn": "1000016-6"
+    },
+    {
+      "id": "AGENCY017", "name": "Natco", "tagline": "Northern Areas Transport",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%232F4F4F'/%3E%3Ctext x='30' y='36' font-size='14' fill='white' text-anchor='middle' font-weight='bold'%3ENATCO%3C/text%3E%3C/svg%3E",
+      "address": { "street": "NATCO Terminal, Danyore", "area": "Danyore", "city": "Gilgit", "phone": "05811-55234", "mobile": "0355-8881234" },
+      "license": "TL-GB-10017", "ntn": "1000017-7"
+    },
+    {
+      "id": "AGENCY018", "name": "Rehman Travels", "tagline": "Comfort on Every Mile",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23556B2F'/%3E%3Ctext x='30' y='38' font-size='18' fill='white' text-anchor='middle' font-weight='bold'%3ERT%3C/text%3E%3C/svg%3E",
+      "address": { "street": "Bus Stand, Mall Road", "area": "Mall Road", "city": "Sialkot", "phone": "052-4261234", "mobile": "0300-6661234" },
+      "license": "TL-PB-10018", "ntn": "1000018-8"
+    },
+    {
+      "id": "AGENCY019", "name": "Gujjar Express", "tagline": "Fast & Affordable",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23FF4500'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='white'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%23FF4500'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%23FF4500'/%3E%3C/svg%3E",
+      "address": { "street": "GT Road Bus Stand", "area": "GT Road", "city": "Gujrat", "phone": "053-3521234", "mobile": "0312-5551234" },
+      "license": "TL-PB-10019", "ntn": "1000019-9"
+    },
+    {
+      "id": "AGENCY020", "name": "Al-Qaim Travels", "tagline": "Your Trusted Travel Partner",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23191970'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='%23C0C0C0'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%23191970'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%23191970'/%3E%3C/svg%3E",
+      "address": { "street": "Bahawalpur Bus Terminal", "area": "Circular Road", "city": "Bahawalpur", "phone": "062-2881234", "mobile": "0345-1121234" },
+      "license": "TL-PB-10020", "ntn": "1000020-0"
+    },
+    {
+      "id": "AGENCY021", "name": "Sammi Daewoo", "tagline": "Premium Executive Service",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%230052A5'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='%23FFD700'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%230052A5'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%230052A5'/%3E%3C/svg%3E",
+      "address": { "street": "Motorway Service Area", "area": "M-2 Motorway", "city": "Islamabad", "phone": "051-111-222-333", "mobile": "0300-8881234" },
+      "license": "TL-ICT-10021", "ntn": "1000021-1"
+    },
+    {
+      "id": "AGENCY022", "name": "Yousaf Travels", "tagline": "Budget-Friendly Travel",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23CD853F'/%3E%3Ctext x='30' y='38' font-size='18' fill='white' text-anchor='middle' font-weight='bold'%3EYT%3C/text%3E%3C/svg%3E",
+      "address": { "street": "Sargodha Bus Stand", "area": "Fatima Jinnah Road", "city": "Sargodha", "phone": "048-3721234", "mobile": "0333-7771234" },
+      "license": "TL-PB-10022", "ntn": "1000022-2"
+    },
+    {
+      "id": "AGENCY023", "name": "Mardan Coaches", "tagline": "KPK's Finest Transport",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23708090'/%3E%3Crect x='12' y='28' width='36' height='14' rx='3' fill='white'/%3E%3Ccircle cx='20' cy='42' r='4' fill='%23708090'/%3E%3Ccircle cx='40' cy='42' r='4' fill='%23708090'/%3E%3C/svg%3E",
+      "address": { "street": "General Bus Stand, Bank Road", "area": "Bank Road", "city": "Mardan", "phone": "0937-871234", "mobile": "0345-4441234" },
+      "license": "TL-KP-10023", "ntn": "1000023-3"
+    },
+    {
+      "id": "AGENCY024", "name": "Swat Coaches", "tagline": "Valley to City Express",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%232E8B57'/%3E%3Cpath d='M18 42 L30 18 L42 42 Z' fill='white' opacity='0.9'/%3E%3C/svg%3E",
+      "address": { "street": "Mingora Bus Stand", "area": "Main Bazaar", "city": "Swat", "phone": "0946-711234", "mobile": "0300-9991234" },
+      "license": "TL-KP-10024", "ntn": "1000024-4"
+    },
+    {
+      "id": "AGENCY025", "name": "Hub Coaches", "tagline": "Connecting Hub to Pakistan",
+      "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Ccircle cx='30' cy='30' r='28' fill='%23696969'/%3E%3Ctext x='30' y='38' font-size='18' fill='white' text-anchor='middle' font-weight='bold'%3EHC%3C/text%3E%3C/svg%3E",
+      "address": { "street": "RCD Highway Terminal", "area": "Hub Chowki", "city": "Hub", "phone": "0853-301234", "mobile": "0312-2221234" },
+      "license": "TL-BL-10025", "ntn": "1000025-5"
+    }
+  ],
+
   paperSizes: [
     { "id": "thermal", "name": "Thermal (80mm)", "width": "80mm", "height": "200mm" },
     { "id": "a5", "name": "A5 (148 × 210 mm)", "width": "148mm", "height": "210mm" },

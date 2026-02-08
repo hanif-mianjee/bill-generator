@@ -2,27 +2,39 @@
  * Form Handler
  * Manages form inputs, validation, and live updates
  * Supports multiple bill amounts
+ * Supports prefix for multiple form instances (e.g., 'travel' prefix)
  */
 
 class FormHandler {
   constructor(options = {}) {
-    this.form = document.getElementById('billForm');
+    const prefix = options.prefix || '';
+    const p = prefix ? prefix.charAt(0).toUpperCase() + prefix.slice(1) : '';
+    const pId = prefix ? prefix : '';
+
+    this.prefix = prefix;
+    this.form = document.getElementById(prefix ? `${prefix}BillForm` : 'billForm');
     this.inputs = {
-      customerName: document.getElementById('customerName'),
-      billDate: document.getElementById('billDate'),
-      totalAmounts: document.getElementById('totalAmounts'),
-      totalAmount: document.getElementById('totalAmount'), // Hidden field for compatibility
-      storeSelect: document.getElementById('storeSelect'),
-      templateSelect: document.getElementById('templateSelect'),
-      paperSizeSelect: document.getElementById('paperSizeSelect'),
-      dateStrategy: document.getElementById('dateStrategy'),
-      thermalMode: document.getElementById('thermalMode')
+      customerName: document.getElementById(pId ? `${pId}CustomerName` : 'customerName'),
+      billDate: document.getElementById(pId ? `${pId}BillDate` : 'billDate'),
+      totalAmounts: document.getElementById(pId ? `${pId}TotalAmounts` : 'totalAmounts'),
+      totalAmount: document.getElementById(pId ? `${pId}TotalAmount` : 'totalAmount'),
+      storeSelect: document.getElementById(pId ? `${pId}AgencySelect` : 'storeSelect'),
+      templateSelect: document.getElementById(pId ? `${pId}TemplateSelect` : 'templateSelect'),
+      paperSizeSelect: document.getElementById(pId ? `${pId}PaperSizeSelect` : 'paperSizeSelect'),
+      dateStrategy: document.getElementById(pId ? `${pId}DateStrategy` : 'dateStrategy'),
+      thermalMode: document.getElementById(pId ? `${pId}ThermalMode` : 'thermalMode'),
+      personCount: document.getElementById(pId ? `${pId}PersonCount` : 'personCount')
     };
     this.errors = {
-      customerName: document.getElementById('customerNameError'),
-      billDate: document.getElementById('billDateError'),
-      totalAmounts: document.getElementById('totalAmountsError')
+      customerName: document.getElementById(pId ? `${pId}CustomerNameError` : 'customerNameError'),
+      billDate: document.getElementById(pId ? `${pId}BillDateError` : 'billDateError'),
+      totalAmounts: document.getElementById(pId ? `${pId}TotalAmountsError` : 'totalAmountsError')
     };
+
+    // Group IDs for thermal mode toggle
+    this.templateGroupId = pId ? `${pId}TemplateGroup` : 'templateGroup';
+    this.paperSizeGroupId = pId ? `${pId}PaperSizeGroup` : 'paperSizeGroup';
+    this.dateStrategyGroupId = pId ? `${pId}DateStrategyGroup` : 'dateStrategyGroup';
 
     this.onChange = options.onChange || (() => {});
     this.debounceTimeout = null;
@@ -40,7 +52,7 @@ class FormHandler {
 
     // Add event listeners
     this.addEventListeners();
-    
+
     // Initialize thermal mode if checkbox is checked by default
     if (this.inputs.thermalMode.checked) {
       this.toggleThermalMode();
@@ -77,6 +89,13 @@ class FormHandler {
       this.toggleDateStrategy();
       this.debouncedOnChange();
     });
+
+    // Person count (travel form only)
+    if (this.inputs.personCount) {
+      this.inputs.personCount.addEventListener('input', () => {
+        this.debouncedOnChange();
+      });
+    }
 
     // Store select
     this.inputs.storeSelect.addEventListener('change', () => {
@@ -249,14 +268,14 @@ class FormHandler {
    */
   toggleThermalMode() {
     const thermalMode = this.inputs.thermalMode.checked;
-    const templateGroup = document.getElementById('templateGroup');
-    const paperSizeGroup = document.getElementById('paperSizeGroup');
-    
+    const templateGroup = document.getElementById(this.templateGroupId);
+    const paperSizeGroup = document.getElementById(this.paperSizeGroupId);
+
     if (thermalMode) {
       // Hide template and paper size selectors
       templateGroup.style.display = 'none';
       paperSizeGroup.style.display = 'none';
-      
+
       // Set to thermal values
       this.inputs.templateSelect.value = 'thermal-print';
       this.inputs.paperSizeSelect.value = 'thermal';
@@ -264,7 +283,7 @@ class FormHandler {
       // Show template and paper size selectors
       templateGroup.style.display = 'block';
       paperSizeGroup.style.display = 'block';
-      
+
       // Set to default values (simple-receipt and a4)
       this.inputs.templateSelect.value = 'simple-receipt';
       this.inputs.paperSizeSelect.value = 'a4';
@@ -276,8 +295,8 @@ class FormHandler {
    */
   toggleDateStrategy() {
     const amounts = this.parseAmounts();
-    const dateStrategyGroup = document.getElementById('dateStrategyGroup');
-    
+    const dateStrategyGroup = document.getElementById(this.dateStrategyGroupId);
+
     if (amounts.length > 1) {
       dateStrategyGroup.style.display = 'block';
     } else {
@@ -290,7 +309,7 @@ class FormHandler {
    */
   getFormData() {
     const amounts = this.parseAmounts();
-    return {
+    const data = {
       customerName: this.inputs.customerName.value.trim(),
       billDate: this.inputs.billDate.value,
       totalAmount: amounts[0] || 0,
@@ -301,6 +320,13 @@ class FormHandler {
       dateStrategy: this.inputs.dateStrategy.value || 'sequential',
       thermalMode: this.inputs.thermalMode.checked
     };
+
+    // Include person count if available (travel form)
+    if (this.inputs.personCount) {
+      data.personCount = parseInt(this.inputs.personCount.value) || 3;
+    }
+
+    return data;
   }
 
   /**
