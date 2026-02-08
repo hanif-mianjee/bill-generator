@@ -24,6 +24,7 @@ class App {
     // Buttons
     this.regenerateBtn = document.getElementById('regenerateBtn');
     this.downloadBtn = document.getElementById('downloadBtn');
+    this.exportBtn = document.getElementById('exportBtn');
     this.randomTemplateBtn = document.getElementById('randomTemplate');
     this.randomStoreBtn = document.getElementById('randomStore');
   }
@@ -87,9 +88,14 @@ class App {
       this.regenerateMedicines();
     });
 
-    // Download button
+    // Download button (print)
     this.downloadBtn.addEventListener('click', () => {
       this.downloadPDF();
+    });
+
+    // Export PDF button
+    this.exportBtn.addEventListener('click', () => {
+      this.exportPDF();
     });
 
     // Random template button
@@ -258,14 +264,19 @@ class App {
       ? amounts.every(amount => this.medicineSelector.selectMedicines(amount).length > 0)
       : this.selectedMedicines.length > 0;
 
-    this.downloadBtn.disabled = !this.formHandler.isValid() || !hasValidMedicines;
+    const isEnabled = this.formHandler.isValid() && hasValidMedicines;
+    this.downloadBtn.disabled = !isEnabled;
+    this.exportBtn.disabled = !isEnabled;
 
-    // Update download button text
+    // Update button text
     const downloadIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
+    const exportIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
     if (hasMultipleBills) {
-      this.downloadBtn.innerHTML = `${downloadIcon}<span>Download ${amounts.length} Bills</span>`;
+      this.downloadBtn.innerHTML = `${downloadIcon}<span>Print ${amounts.length} Bills</span>`;
+      this.exportBtn.innerHTML = `${exportIcon}<span>Export ${amounts.length} Bills</span>`;
     } else {
-      this.downloadBtn.innerHTML = `${downloadIcon}<span>Download PDF</span>`;
+      this.downloadBtn.innerHTML = `${downloadIcon}<span>Print PDF</span>`;
+      this.exportBtn.innerHTML = `${exportIcon}<span>Export PDF</span>`;
     }
   }
 
@@ -368,7 +379,45 @@ class App {
       return;
     }
 
-    await this.pdfGenerator.generate(previewElement, {
+    await this.pdfGenerator.print(previewElement, {
+      customerName: formData.customerName,
+      billNumber: this.preview.getBillNumber(),
+      billCount: amounts.length,
+      paperSize: formData.paperSizeId || 'thermal'
+    });
+  }
+
+  /**
+   * Export PDF (real PDF file)
+   */
+  async exportPDF() {
+    const formData = this.formHandler.getFormData();
+
+    if (!this.formHandler.validate()) {
+      alert('Please fill in all required fields correctly.');
+      return;
+    }
+
+    const amounts = formData.totalAmounts || [formData.totalAmount];
+
+    if (amounts.length === 0) {
+      alert('No valid amounts entered.');
+      return;
+    }
+
+    const previewElement = this.preview.getElement();
+
+    const hasPlaceholder = previewElement.querySelector('.bill-placeholder');
+    const hasBillContent = previewElement.querySelector('.bill-header') ||
+                          previewElement.querySelector('.medicines-table') ||
+                          previewElement.querySelectorAll('.bill-preview-item').length > 0;
+
+    if (hasPlaceholder && !hasBillContent) {
+      alert('No bills to export. Please enter valid amounts.');
+      return;
+    }
+
+    await this.pdfGenerator.export(previewElement, {
       customerName: formData.customerName,
       billNumber: this.preview.getBillNumber(),
       billCount: amounts.length,
@@ -414,6 +463,7 @@ class TravelApp {
     // Buttons
     this.regenerateBtn = document.getElementById('travelRegenerateBtn');
     this.downloadBtn = document.getElementById('travelDownloadBtn');
+    this.exportBtn = document.getElementById('travelExportBtn');
     this.randomTemplateBtn = document.getElementById('travelRandomTemplate');
     this.randomAgencyBtn = document.getElementById('travelRandomAgency');
   }
@@ -472,6 +522,10 @@ class TravelApp {
 
     this.downloadBtn.addEventListener('click', () => {
       this.downloadPDF();
+    });
+
+    this.exportBtn.addEventListener('click', () => {
+      this.exportPDF();
     });
 
     this.randomTemplateBtn.addEventListener('click', () => {
@@ -575,13 +629,18 @@ class TravelApp {
       ? amounts.every(amount => this.itemSelector.selectItems(amount, personCount).length > 0)
       : this.selectedItems.length > 0;
 
-    this.downloadBtn.disabled = !this.formHandler.isValid() || !hasValidItems;
+    const isEnabled = this.formHandler.isValid() && hasValidItems;
+    this.downloadBtn.disabled = !isEnabled;
+    this.exportBtn.disabled = !isEnabled;
 
     const downloadIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>`;
+    const exportIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`;
     if (hasMultipleBills) {
-      this.downloadBtn.innerHTML = `${downloadIcon}<span>Download ${amounts.length} Bills</span>`;
+      this.downloadBtn.innerHTML = `${downloadIcon}<span>Print ${amounts.length} Bills</span>`;
+      this.exportBtn.innerHTML = `${exportIcon}<span>Export ${amounts.length} Bills</span>`;
     } else {
-      this.downloadBtn.innerHTML = `${downloadIcon}<span>Download PDF</span>`;
+      this.downloadBtn.innerHTML = `${downloadIcon}<span>Print PDF</span>`;
+      this.exportBtn.innerHTML = `${exportIcon}<span>Export PDF</span>`;
     }
   }
 
@@ -659,7 +718,45 @@ class TravelApp {
       return;
     }
 
-    await this.pdfGenerator.generate(previewElement, {
+    await this.pdfGenerator.print(previewElement, {
+      customerName: formData.customerName,
+      billNumber: this.preview.getBillNumber(),
+      billCount: amounts.length,
+      paperSize: formData.paperSizeId || 'thermal'
+    });
+  }
+
+  /**
+   * Export PDF (real PDF file)
+   */
+  async exportPDF() {
+    const formData = this.formHandler.getFormData();
+
+    if (!this.formHandler.validate()) {
+      alert('Please fill in all required fields correctly.');
+      return;
+    }
+
+    const amounts = formData.totalAmounts || [formData.totalAmount];
+
+    if (amounts.length === 0) {
+      alert('No valid amounts entered.');
+      return;
+    }
+
+    const previewElement = this.preview.getElement();
+
+    const hasPlaceholder = previewElement.querySelector('.bill-placeholder');
+    const hasBillContent = previewElement.querySelector('.bill-header') ||
+                          previewElement.querySelector('.medicines-table') ||
+                          previewElement.querySelectorAll('.bill-preview-item').length > 0;
+
+    if (hasPlaceholder && !hasBillContent) {
+      alert('No bills to export. Please enter valid amounts.');
+      return;
+    }
+
+    await this.pdfGenerator.export(previewElement, {
       customerName: formData.customerName,
       billNumber: this.preview.getBillNumber(),
       billCount: amounts.length,
