@@ -378,6 +378,21 @@ body {
   transform: translateY(0);
 }
 
+.btn-export {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  color: var(--color-white);
+  box-shadow: 0 4px 15px rgba(5, 150, 105, 0.4);
+}
+
+.btn-export:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.5);
+}
+
+.btn-export:active:not(:disabled) {
+  transform: translateY(0);
+}
+
 .btn .icon {
   font-size: var(--font-size-lg);
 }

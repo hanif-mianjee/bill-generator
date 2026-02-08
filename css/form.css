@@ -185,7 +185,7 @@ input[type="number"].form-input {
 /* Form Actions */
 .form-actions {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: var(--spacing-3);
   margin-top: var(--spacing-4);
   padding-top: var(--spacing-4);
@@ -193,7 +193,7 @@ input[type="number"].form-input {
 }
 
 .form-actions .btn {
-  width: 100%;
+  flex: 1 1 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -206,12 +206,12 @@ input[type="number"].form-input {
 
 /* Responsive */
 @media (min-width: 480px) {
-  .form-actions {
-    flex-direction: row;
+  .form-actions .btn {
+    flex: 1 1 0;
   }
 
-  .form-actions .btn {
-    flex: 1;
+  .form-actions .btn-secondary {
+    flex: 1 1 100%;
   }
 }
 
